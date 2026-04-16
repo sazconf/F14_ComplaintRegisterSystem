@@ -1,0 +1,5 @@
+CREATE DATABASE ComplaintDB;
+GO
+
+USE ComplaintDB;
+GO
