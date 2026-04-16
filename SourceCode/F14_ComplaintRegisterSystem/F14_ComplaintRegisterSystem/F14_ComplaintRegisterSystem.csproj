@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmComplaint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmComplaint.Designer.cs">
+      <DependentUpon>FrmComplaint.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmConnection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmComplaint.resx">
+      <DependentUpon>FrmComplaint.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmConnection.resx">
       <DependentUpon>FrmConnection.cs</DependentUpon>
     </EmbeddedResource>
