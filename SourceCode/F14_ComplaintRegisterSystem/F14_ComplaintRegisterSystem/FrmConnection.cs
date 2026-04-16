@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace F14_ComplaintRegisterSystem
 {
-    public partial class Form1 : Form
+    public partial class FrmConnection : Form
     {
-        public Form1()
+        public FrmConnection()
         {
             InitializeComponent();
         }

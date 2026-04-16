@@ -1,6 +1,6 @@
 ﻿namespace F14_ComplaintRegisterSystem
 {
-    partial class Form1
+    partial class FrmConnection
     {
         /// <summary>
         /// Required designer variable.
