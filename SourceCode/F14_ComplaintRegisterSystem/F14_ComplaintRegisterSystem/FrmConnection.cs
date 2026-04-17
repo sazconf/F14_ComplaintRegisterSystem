@@ -45,7 +45,9 @@ namespace F14_ComplaintRegisterSystem
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Main system form coming next.");
+            FrmComplaint frm = new FrmComplaint();
+            frm.Show();
+            this.Hide();
         }
     }
 }
