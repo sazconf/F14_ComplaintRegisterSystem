@@ -373,5 +373,27 @@ namespace F14_ComplaintRegisterSystem
 
             conn.Close();
         }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtComplaintID.Clear();
+            txtTitle.Clear();
+            txtDescription.Clear();
+            txtRejectReason.Clear();
+            txtSearch.Clear();
+
+            if (cmbUser.Items.Count > 0)
+                cmbUser.SelectedIndex = 0;
+
+            if (cmbCategory.Items.Count > 0)
+                cmbCategory.SelectedIndex = 0;
+
+            if (cmbStatus.Items.Count > 0)
+                cmbStatus.SelectedIndex = 0;
+
+            dtpDate.Value = DateTime.Now;
+
+            txtTitle.Focus();
+        }
     }
 }
