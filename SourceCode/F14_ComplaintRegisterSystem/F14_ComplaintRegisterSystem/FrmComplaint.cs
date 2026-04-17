@@ -22,6 +22,8 @@ namespace F14_ComplaintRegisterSystem
             LoadCategories();
             LoadStatus();
 
+            LoadTotalRecords();
+
         }
 
         private void LoadUsers()
@@ -266,6 +268,20 @@ namespace F14_ComplaintRegisterSystem
             dt.Load(dr);
 
             dgvComplaints.DataSource = dt;
+
+            conn.Close();
+        }
+
+        private void LoadTotalRecords()
+        {
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM dbo.complaints", conn);
+
+            int total = (int)cmd.ExecuteScalar();
+
+            lblTotal.Text = "Total Records: " + total;
 
             conn.Close();
         }
