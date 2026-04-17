@@ -77,5 +77,37 @@ namespace F14_ComplaintRegisterSystem
 
             conn.Close();
         }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+            if (txtTitle.Text == "" || txtDescription.Text == "")
+            {
+                MessageBox.Show("Please fill all required fields.");
+                return;
+            }
+
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(
+                @"INSERT INTO dbo.complaints
+        (user_id, category_id, status_id, title, description, report_date, rejection_reason)
+        VALUES
+        (@user_id, @category_id, @status_id, @title, @description, @report_date, @rejection_reason)", conn);
+
+            cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
+            cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
+            cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
+            cmd.Parameters.AddWithValue("@title", txtTitle.Text);
+            cmd.Parameters.AddWithValue("@description", txtDescription.Text);
+            cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
+            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            MessageBox.Show("Complaint inserted successfully.");
+        }
     }
 }
