@@ -170,16 +170,17 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(618, 315);
+            this.btnSearch.Location = new System.Drawing.Point(801, 316);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.Size = new System.Drawing.Size(113, 23);
             this.btnSearch.TabIndex = 12;
-            this.btnSearch.Text = "Search";
+            this.btnSearch.Text = "Search Citizen";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(505, 315);
+            this.btnClear.Location = new System.Drawing.Point(477, 315);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 13;
@@ -250,7 +251,7 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(715, 315);
+            this.txtSearch.Location = new System.Drawing.Point(578, 315);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(217, 22);
             this.txtSearch.TabIndex = 22;
