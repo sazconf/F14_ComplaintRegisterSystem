@@ -164,6 +164,7 @@
             this.btnShow.TabIndex = 11;
             this.btnShow.Text = "Show Data";
             this.btnShow.UseVisualStyleBackColor = true;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
             // 
             // btnSearch
             // 

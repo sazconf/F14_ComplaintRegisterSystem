@@ -1,4 +1,20 @@
- use ComplaintDB;
- GO
-
-SELECT * FROM dbo.complaints;
+INSERT INTO dbo.complaints
+(
+    user_id,
+    category_id,
+    status_id,
+    title,
+    description,
+    report_date,
+    rejection_reason
+)
+VALUES
+(
+    @user_id,
+    @category_id,
+    @status_id,
+    @title,
+    @description,
+    @report_date,
+    @rejection_reason
+);
