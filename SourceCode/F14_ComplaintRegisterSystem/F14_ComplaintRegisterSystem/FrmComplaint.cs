@@ -139,5 +139,24 @@ namespace F14_ComplaintRegisterSystem
 
             conn.Close();
         }
+
+        private void dgvComplaints_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvComplaints.Rows[e.RowIndex];
+
+                txtComplaintID.Text = row.Cells["complaint_id"].Value.ToString();
+                txtTitle.Text = row.Cells["title"].Value.ToString();
+                txtDescription.Text = row.Cells["description"].Value.ToString();
+                txtRejectReason.Text = row.Cells["rejection_reason"].Value.ToString();
+
+                dtpDate.Value = Convert.ToDateTime(row.Cells["report_date"].Value);
+
+                cmbUser.Text = row.Cells["Citizen"].Value.ToString();
+                cmbCategory.Text = row.Cells["Category"].Value.ToString();
+                cmbStatus.Text = row.Cells["Status"].Value.ToString();
+            }
+        }
     }
 }

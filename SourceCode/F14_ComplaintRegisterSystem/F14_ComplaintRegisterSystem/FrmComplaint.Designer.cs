@@ -262,6 +262,7 @@
             this.dgvComplaints.RowTemplate.Height = 24;
             this.dgvComplaints.Size = new System.Drawing.Size(861, 150);
             this.dgvComplaints.TabIndex = 23;
+            this.dgvComplaints.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvComplaints_CellClick);
             // 
             // lblTotal
             // 
