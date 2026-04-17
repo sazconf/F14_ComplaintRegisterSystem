@@ -82,9 +82,39 @@ namespace F14_ComplaintRegisterSystem
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            if (txtTitle.Text == "" || txtDescription.Text == "")
+            // Validation
+            if (cmbUser.SelectedIndex == -1)
             {
-                MessageBox.Show("Please fill all required fields.");
+                MessageBox.Show("Please select a citizen.");
+                cmbUser.Focus();
+                return;
+            }
+
+            if (cmbCategory.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a category.");
+                cmbCategory.Focus();
+                return;
+            }
+
+            if (txtTitle.Text.Trim() == "")
+            {
+                MessageBox.Show("Please enter complaint title.");
+                txtTitle.Focus();
+                return;
+            }
+
+            if (txtDescription.Text.Trim() == "")
+            {
+                MessageBox.Show("Please enter complaint description.");
+                txtDescription.Focus();
+                return;
+            }
+
+            if (cmbStatus.Text == "Rejected" && txtRejectReason.Text.Trim() == "")
+            {
+                MessageBox.Show("Please enter rejection reason.");
+                txtRejectReason.Focus();
                 return;
             }
 
@@ -93,21 +123,39 @@ namespace F14_ComplaintRegisterSystem
 
             SqlCommand cmd = new SqlCommand(
                 @"INSERT INTO dbo.complaints
-        (user_id, category_id, status_id, title, description, report_date, rejection_reason)
+        (
+            user_id,
+            category_id,
+            status_id,
+            title,
+            description,
+            report_date,
+            rejection_reason
+        )
         VALUES
-        (@user_id, @category_id, @status_id, @title, @description, @report_date, @rejection_reason)", conn);
+        (
+            @user_id,
+            @category_id,
+            @status_id,
+            @title,
+            @description,
+            @report_date,
+            @rejection_reason
+        )", conn);
 
             cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
             cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
             cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
-            cmd.Parameters.AddWithValue("@title", txtTitle.Text);
-            cmd.Parameters.AddWithValue("@description", txtDescription.Text);
+            cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
+            cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
             cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
-            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text);
+            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
 
             cmd.ExecuteNonQuery();
 
             conn.Close();
+
+            LoadTotalRecords();
 
             MessageBox.Show("Complaint inserted successfully.");
         }
@@ -163,16 +211,54 @@ namespace F14_ComplaintRegisterSystem
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (txtComplaintID.Text == "")
+            // Must select record first
+            if (txtComplaintID.Text.Trim() == "")
             {
                 MessageBox.Show("Please select a complaint first.");
                 return;
             }
 
+            // Validation
+            if (cmbUser.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a citizen.");
+                cmbUser.Focus();
+                return;
+            }
+
+            if (cmbCategory.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a category.");
+                cmbCategory.Focus();
+                return;
+            }
+
+            if (txtTitle.Text.Trim() == "")
+            {
+                MessageBox.Show("Please enter complaint title.");
+                txtTitle.Focus();
+                return;
+            }
+
+            if (txtDescription.Text.Trim() == "")
+            {
+                MessageBox.Show("Please enter complaint description.");
+                txtDescription.Focus();
+                return;
+            }
+
+            if (cmbStatus.Text == "Rejected" && txtRejectReason.Text.Trim() == "")
+            {
+                MessageBox.Show("Please enter rejection reason.");
+                txtRejectReason.Focus();
+                return;
+            }
+
             DialogResult result = MessageBox.Show(
-                "Are you sure you want to update this record?",
+                "Are you sure you want to update this complaint?",
                 "Confirm Update",
-                MessageBoxButtons.YesNo);
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
             if (result == DialogResult.No)
                 return;
@@ -194,15 +280,17 @@ namespace F14_ComplaintRegisterSystem
             cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
             cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
             cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
-            cmd.Parameters.AddWithValue("@title", txtTitle.Text);
-            cmd.Parameters.AddWithValue("@description", txtDescription.Text);
+            cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
+            cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
             cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
-            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text);
+            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
             cmd.Parameters.AddWithValue("@complaint_id", txtComplaintID.Text);
 
             cmd.ExecuteNonQuery();
 
             conn.Close();
+
+            LoadTotalRecords();
 
             MessageBox.Show("Complaint updated successfully.");
         }
