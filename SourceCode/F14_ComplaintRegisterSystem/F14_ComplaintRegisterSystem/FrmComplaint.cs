@@ -158,5 +158,51 @@ namespace F14_ComplaintRegisterSystem
                 cmbStatus.Text = row.Cells["Status"].Value.ToString();
             }
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (txtComplaintID.Text == "")
+            {
+                MessageBox.Show("Please select a complaint first.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to update this record?",
+                "Confirm Update",
+                MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.No)
+                return;
+
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(
+                @"UPDATE dbo.complaints
+          SET user_id = @user_id,
+              category_id = @category_id,
+              status_id = @status_id,
+              title = @title,
+              description = @description,
+              report_date = @report_date,
+              rejection_reason = @rejection_reason
+          WHERE complaint_id = @complaint_id", conn);
+
+            cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
+            cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
+            cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
+            cmd.Parameters.AddWithValue("@title", txtTitle.Text);
+            cmd.Parameters.AddWithValue("@description", txtDescription.Text);
+            cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
+            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text);
+            cmd.Parameters.AddWithValue("@complaint_id", txtComplaintID.Text);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            MessageBox.Show("Complaint updated successfully.");
+        }
     }
 }
