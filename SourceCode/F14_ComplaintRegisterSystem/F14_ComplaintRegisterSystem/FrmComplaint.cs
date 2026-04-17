@@ -158,6 +158,8 @@ namespace F14_ComplaintRegisterSystem
             LoadTotalRecords();
 
             MessageBox.Show("Complaint inserted successfully.");
+
+            btnShow.PerformClick();
         }
 
         private void btnShow_Click(object sender, EventArgs e)
@@ -293,6 +295,8 @@ namespace F14_ComplaintRegisterSystem
             LoadTotalRecords();
 
             MessageBox.Show("Complaint updated successfully.");
+
+            btnShow.PerformClick();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -324,6 +328,8 @@ namespace F14_ComplaintRegisterSystem
             conn.Close();
 
             MessageBox.Show("Complaint deleted successfully.");
+
+            btnShow.PerformClick();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
