@@ -204,5 +204,36 @@ namespace F14_ComplaintRegisterSystem
 
             MessageBox.Show("Complaint updated successfully.");
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (txtComplaintID.Text == "")
+            {
+                MessageBox.Show("Please select a complaint first.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this record?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.No)
+                return;
+
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(
+                "DELETE FROM dbo.complaints WHERE complaint_id = @complaint_id", conn);
+
+            cmd.Parameters.AddWithValue("@complaint_id", txtComplaintID.Text);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            MessageBox.Show("Complaint deleted successfully.");
+        }
     }
 }
