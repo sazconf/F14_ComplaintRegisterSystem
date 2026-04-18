@@ -84,6 +84,7 @@
             this.btnUserPanel.TabIndex = 4;
             this.btnUserPanel.Text = "User Panel";
             this.btnUserPanel.UseVisualStyleBackColor = true;
+            this.btnUserPanel.Click += new System.EventHandler(this.btnUserPanel_Click);
             // 
             // FrmConnection
             // 

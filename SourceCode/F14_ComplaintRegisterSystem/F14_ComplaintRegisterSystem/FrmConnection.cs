@@ -50,5 +50,12 @@ namespace F14_ComplaintRegisterSystem
             frm.Show();
             this.Hide();
         }
+
+        private void btnUserPanel_Click(object sender, EventArgs e)
+        {
+            FrmUserPanel frm = new FrmUserPanel();
+            frm.Show();
+            this.Hide();
+        }
     }
 }
