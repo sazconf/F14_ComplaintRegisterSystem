@@ -30,6 +30,7 @@ namespace F14_ComplaintRegisterSystem
 
                     lblStatus.Text = "Status: Connected";
                     btnEnter.Enabled = true;
+                    btnUserPanel.Enabled = true;
 
                     MessageBox.Show("Database connected successfully.");
                 }
