@@ -13,7 +13,7 @@ namespace F14_ComplaintRegisterSystem
 {
     public partial class FrmUserPanel : Form
     {
-        string connStr = @"Data Source=SAZZAD_LAPTOP\SQLSERVERDEV;Initial Catalog=ComplaintDB;Integrated Security=True";
+        
         public FrmUserPanel()
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void LoadUsers()
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(
@@ -44,7 +44,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void LoadCategories()
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(
@@ -76,7 +76,7 @@ namespace F14_ComplaintRegisterSystem
                 return;
             }
 
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(
@@ -120,7 +120,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void btnView_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(@"

@@ -13,7 +13,7 @@ namespace F14_ComplaintRegisterSystem
 {
     public partial class FrmComplaint : Form
     {
-        string connStr = @"Data Source=SAZZAD_LAPTOP\SQLSERVERDEV;Initial Catalog=ComplaintDB;Integrated Security=True";
+        
         public FrmComplaint()
         {
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void LoadUsers()
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand("SELECT user_id, full_name FROM dbo.users WHERE role='Citizen'", conn);
@@ -46,7 +46,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void LoadCategories()
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand("SELECT category_id, category_name FROM dbo.categories", conn);
@@ -64,7 +64,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void LoadStatus()
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand("SELECT status_id, status_name FROM dbo.status", conn);
@@ -118,7 +118,7 @@ namespace F14_ComplaintRegisterSystem
                 return;
             }
 
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(
@@ -164,7 +164,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void btnShow_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(@"
@@ -265,7 +265,7 @@ namespace F14_ComplaintRegisterSystem
             if (result == DialogResult.No)
                 return;
 
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(
@@ -315,7 +315,7 @@ namespace F14_ComplaintRegisterSystem
             if (result == DialogResult.No)
                 return;
 
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(
@@ -334,7 +334,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(@"
@@ -368,7 +368,7 @@ namespace F14_ComplaintRegisterSystem
 
         private void LoadTotalRecords()
         {
-            SqlConnection conn = new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
             conn.Open();
 
             SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM dbo.complaints", conn);

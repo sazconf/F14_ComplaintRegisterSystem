@@ -13,8 +13,7 @@ namespace F14_ComplaintRegisterSystem
 {
     public partial class FrmConnection : Form
     {
-        string connStr = @"Data Source=SAZZAD_LAPTOP\SQLSERVERDEV;Initial Catalog=ComplaintDB;Integrated Security=True";
-
+        
         public FrmConnection()
         {
             InitializeComponent();
@@ -24,7 +23,7 @@ namespace F14_ComplaintRegisterSystem
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connStr))
+                using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
                 {
                     conn.Open();
 
