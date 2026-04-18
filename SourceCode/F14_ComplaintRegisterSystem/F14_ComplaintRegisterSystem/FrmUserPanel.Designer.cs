@@ -149,6 +149,7 @@
             this.btnView.TabIndex = 11;
             this.btnView.Text = "View My Complaints";
             this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // btnClear
             // 
@@ -158,6 +159,7 @@
             this.btnClear.TabIndex = 12;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // dgvMyComplaints
             // 
