@@ -401,5 +401,12 @@ namespace F14_ComplaintRegisterSystem
 
             txtTitle.Focus();
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            FrmConnection frm = new FrmConnection();
+            frm.Show();
+            this.Close();
+        }
     }
 }

@@ -174,5 +174,60 @@ namespace F14_ComplaintRegisterSystem
 
             txtTitle.Focus();
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            FrmConnection frm = new FrmConnection();
+            frm.Show();
+            this.Close();
+        }
+
+        private void btnAddUser_Click(object sender, EventArgs e)
+        {
+            if (txtNewName.Text.Trim() == "" ||
+                txtNewEmail.Text.Trim() == "" ||
+                txtNewPassword.Text.Trim() == "")
+            {
+                MessageBox.Show("Please fill all required fields.");
+                return;
+            }
+
+            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(
+                @"INSERT INTO dbo.users
+        (
+            full_name,
+            email,
+            password,
+            role
+        )
+        VALUES
+        (
+            @name,
+            @email,
+            @password,
+            'Citizen'
+        )", conn);
+
+            cmd.Parameters.AddWithValue("@name", txtNewName.Text.Trim());
+            cmd.Parameters.AddWithValue("@email", txtNewEmail.Text.Trim());
+            cmd.Parameters.AddWithValue("@password", txtNewPassword.Text.Trim());
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            MessageBox.Show("New user added successfully.");
+
+            LoadUsers();
+
+            txtNewName.Clear();
+            txtNewEmail.Clear();
+            txtNewPassword.Clear();
+
+            txtNewName.Focus();
+        }
     }
 }

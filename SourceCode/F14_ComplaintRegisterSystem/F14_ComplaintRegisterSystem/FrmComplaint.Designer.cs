@@ -53,13 +53,14 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.dgvComplaints = new System.Windows.Forms.DataGridView();
             this.lblTotal = new System.Windows.Forms.Label();
+            this.btnBack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComplaints)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 56);
+            this.label1.Location = new System.Drawing.Point(102, 61);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 16);
             this.label1.TabIndex = 0;
@@ -68,7 +69,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 94);
+            this.label2.Location = new System.Drawing.Point(102, 99);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(46, 16);
             this.label2.TabIndex = 1;
@@ -77,7 +78,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 128);
+            this.label3.Location = new System.Drawing.Point(102, 133);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(33, 16);
             this.label3.TabIndex = 2;
@@ -86,7 +87,7 @@
             // labelx
             // 
             this.labelx.AutoSize = true;
-            this.labelx.Location = new System.Drawing.Point(40, 161);
+            this.labelx.Location = new System.Drawing.Point(102, 166);
             this.labelx.Name = "labelx";
             this.labelx.Size = new System.Drawing.Size(75, 16);
             this.labelx.TabIndex = 3;
@@ -95,7 +96,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(422, 56);
+            this.label5.Location = new System.Drawing.Point(484, 61);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(62, 16);
             this.label5.TabIndex = 4;
@@ -104,7 +105,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(422, 94);
+            this.label6.Location = new System.Drawing.Point(484, 99);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 16);
             this.label6.TabIndex = 5;
@@ -113,7 +114,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(422, 128);
+            this.label7.Location = new System.Drawing.Point(484, 133);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(80, 16);
             this.label7.TabIndex = 6;
@@ -122,7 +123,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(422, 161);
+            this.label8.Location = new System.Drawing.Point(484, 166);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(115, 16);
             this.label8.TabIndex = 7;
@@ -130,7 +131,7 @@
             // 
             // btnInsert
             // 
-            this.btnInsert.Location = new System.Drawing.Point(71, 316);
+            this.btnInsert.Location = new System.Drawing.Point(133, 321);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(75, 23);
             this.btnInsert.TabIndex = 8;
@@ -140,7 +141,7 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(172, 315);
+            this.btnUpdate.Location = new System.Drawing.Point(234, 320);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 9;
@@ -150,7 +151,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(276, 315);
+            this.btnDelete.Location = new System.Drawing.Point(338, 320);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 10;
@@ -160,7 +161,7 @@
             // 
             // btnShow
             // 
-            this.btnShow.Location = new System.Drawing.Point(383, 315);
+            this.btnShow.Location = new System.Drawing.Point(445, 320);
             this.btnShow.Name = "btnShow";
             this.btnShow.Size = new System.Drawing.Size(75, 23);
             this.btnShow.TabIndex = 11;
@@ -170,7 +171,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(801, 316);
+            this.btnSearch.Location = new System.Drawing.Point(863, 321);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(113, 23);
             this.btnSearch.TabIndex = 12;
@@ -180,7 +181,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(477, 315);
+            this.btnClear.Location = new System.Drawing.Point(539, 320);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 13;
@@ -190,7 +191,7 @@
             // 
             // txtComplaintID
             // 
-            this.txtComplaintID.Location = new System.Drawing.Point(150, 56);
+            this.txtComplaintID.Location = new System.Drawing.Point(212, 61);
             this.txtComplaintID.Name = "txtComplaintID";
             this.txtComplaintID.ReadOnly = true;
             this.txtComplaintID.Size = new System.Drawing.Size(254, 22);
@@ -198,7 +199,7 @@
             // 
             // txtRejectReason
             // 
-            this.txtRejectReason.Location = new System.Drawing.Point(546, 161);
+            this.txtRejectReason.Location = new System.Drawing.Point(608, 166);
             this.txtRejectReason.Multiline = true;
             this.txtRejectReason.Name = "txtRejectReason";
             this.txtRejectReason.Size = new System.Drawing.Size(386, 127);
@@ -206,14 +207,14 @@
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(150, 128);
+            this.txtTitle.Location = new System.Drawing.Point(212, 133);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(254, 22);
             this.txtTitle.TabIndex = 16;
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(150, 161);
+            this.txtDescription.Location = new System.Drawing.Point(212, 166);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(254, 137);
@@ -222,7 +223,7 @@
             // cmbUser
             // 
             this.cmbUser.FormattingEnabled = true;
-            this.cmbUser.Location = new System.Drawing.Point(150, 94);
+            this.cmbUser.Location = new System.Drawing.Point(212, 99);
             this.cmbUser.Name = "cmbUser";
             this.cmbUser.Size = new System.Drawing.Size(254, 24);
             this.cmbUser.TabIndex = 18;
@@ -230,7 +231,7 @@
             // cmbCategory
             // 
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(546, 53);
+            this.cmbCategory.Location = new System.Drawing.Point(608, 58);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(386, 24);
             this.cmbCategory.TabIndex = 19;
@@ -238,21 +239,21 @@
             // cmbStatus
             // 
             this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(546, 94);
+            this.cmbStatus.Location = new System.Drawing.Point(608, 99);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(386, 24);
             this.cmbStatus.TabIndex = 20;
             // 
             // dtpDate
             // 
-            this.dtpDate.Location = new System.Drawing.Point(546, 128);
+            this.dtpDate.Location = new System.Drawing.Point(608, 133);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(200, 22);
             this.dtpDate.TabIndex = 21;
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(578, 315);
+            this.txtSearch.Location = new System.Drawing.Point(640, 320);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(217, 22);
             this.txtSearch.TabIndex = 22;
@@ -260,11 +261,11 @@
             // dgvComplaints
             // 
             this.dgvComplaints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvComplaints.Location = new System.Drawing.Point(71, 411);
+            this.dgvComplaints.Location = new System.Drawing.Point(29, 393);
             this.dgvComplaints.Name = "dgvComplaints";
             this.dgvComplaints.RowHeadersWidth = 51;
             this.dgvComplaints.RowTemplate.Height = 24;
-            this.dgvComplaints.Size = new System.Drawing.Size(861, 150);
+            this.dgvComplaints.Size = new System.Drawing.Size(1091, 150);
             this.dgvComplaints.TabIndex = 23;
             this.dgvComplaints.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvComplaints_CellClick);
             // 
@@ -277,11 +278,22 @@
             this.lblTotal.TabIndex = 24;
             this.lblTotal.Text = "Total Records: 0";
             // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(29, 13);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.TabIndex = 25;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // FrmComplaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1082, 653);
+            this.ClientSize = new System.Drawing.Size(1148, 653);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.dgvComplaints);
             this.Controls.Add(this.txtSearch);
@@ -343,5 +355,6 @@
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.DataGridView dgvComplaints;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Button btnBack;
     }
 }
