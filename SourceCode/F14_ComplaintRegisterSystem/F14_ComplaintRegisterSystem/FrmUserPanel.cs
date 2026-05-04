@@ -9,59 +9,49 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
+
 namespace F14_ComplaintRegisterSystem
 {
     public partial class FrmUserPanel : Form
     {
-        
         public FrmUserPanel()
         {
             InitializeComponent();
-
-            LoadUsers();
             LoadCategories();
         }
 
-        private void LoadUsers()
-        {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand(
-                "SELECT user_id, full_name FROM dbo.users WHERE role='Citizen'", conn);
-
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-
-            cmbUser.DataSource = dt;
-            cmbUser.DisplayMember = "full_name";
-            cmbUser.ValueMember = "user_id";
-
-            conn.Close();
-        }
-
+        // Load Categories
         private void LoadCategories()
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
 
-            SqlCommand cmd = new SqlCommand(
-                "SELECT category_id, category_name FROM dbo.categories", conn);
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT category_id, category_name FROM dbo.categories", conn);
 
-            SqlDataReader dr = cmd.ExecuteReader();
+                SqlDataReader dr = cmd.ExecuteReader();
 
-            DataTable dt = new DataTable();
-            dt.Load(dr);
+                DataTable dt = new DataTable();
+                dt.Load(dr);
 
-            cmbCategory.DataSource = dt;
-            cmbCategory.DisplayMember = "category_name";
-            cmbCategory.ValueMember = "category_id";
-
-            conn.Close();
+                cmbCategory.DataSource = dt;
+                cmbCategory.DisplayMember = "category_name";
+                cmbCategory.ValueMember = "category_id";
+            }
         }
 
+        // FORM LOAD
+        private void FrmUserPanel_Load(object sender, EventArgs e)
+        {
+            lblUserWelcome.Text = "Welcome, " + Session.UserName;
+
+            // Disable manual date change
+            dtpDate.Value = DateTime.Now;
+            dtpDate.Enabled = false;
+        }
+
+        // SUBMIT COMPLAINT
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             if (txtTitle.Text.Trim() == "")
@@ -76,94 +66,107 @@ namespace F14_ComplaintRegisterSystem
                 return;
             }
 
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            // Prevent very short complaints
+            if (txtDescription.Text.Length < 10)
+            {
+                MessageBox.Show("Description must be at least 10 characters.");
+                return;
+            }
 
-            SqlCommand cmd = new SqlCommand(
-                @"INSERT INTO dbo.complaints
-        (
-            user_id,
-            category_id,
-            status_id,
-            title,
-            description,
-            report_date,
-            rejection_reason
-        )
-        VALUES
-        (
-            @user_id,
-            @category_id,
-            1,
-            @title,
-            @description,
-            @report_date,
-            ''
-        )", conn);
+            if (txtTitle.Text.Length < 5)
+            {
+                MessageBox.Show("Title too short.");
+                return;
+            }
 
-            cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
-            cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
-            cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
-            cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-            cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
 
-            cmd.ExecuteNonQuery();
+                SqlCommand cmd = new SqlCommand(
+                    @"INSERT INTO dbo.complaints
+                    (
+                        user_id,
+                        category_id,
+                        status_id,
+                        title,
+                        description,
+                        report_date,
+                        rejection_reason
+                    )
+                    VALUES
+                    (
+                        @user_id,
+                        @category_id,
+                        1,
+                        @title,
+                        @description,
+                        @report_date,
+                        ''
+                    )", conn);
 
-            conn.Close();
+                cmd.Parameters.AddWithValue("@user_id", Session.UserID);
+                cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
+                cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
+                cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
+                cmd.Parameters.AddWithValue("@report_date", DateTime.Now);
+
+                cmd.ExecuteNonQuery();
+            }
 
             MessageBox.Show("Complaint submitted successfully.");
 
             txtTitle.Clear();
             txtDescription.Clear();
+
             btnView.PerformClick();
         }
 
+        // VIEW MY COMPLAINTS
         private void btnView_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
 
-            SqlCommand cmd = new SqlCommand(@"
-        SELECT
-            c.complaint_id,
-            c.title,
-            c.description,
-            cat.category_name AS Category,
-            s.status_name AS Status,
-            c.report_date,
-            c.rejection_reason
-        FROM dbo.complaints c
-        INNER JOIN dbo.categories cat ON c.category_id = cat.category_id
-        INNER JOIN dbo.status s ON c.status_id = s.status_id
-        WHERE c.user_id = @user_id", conn);
+                SqlCommand cmd = new SqlCommand(@"
+                    SELECT
+                        c.complaint_id,
+                        c.title,
+                        c.description,
+                        cat.category_name AS Category,
+                        s.status_name AS Status,
+                        c.report_date,
+                        c.rejection_reason
+                    FROM dbo.complaints c
+                    INNER JOIN dbo.categories cat ON c.category_id = cat.category_id
+                    INNER JOIN dbo.status s ON c.status_id = s.status_id
+                    WHERE c.user_id = @user_id", conn);
 
-            cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
+                cmd.Parameters.AddWithValue("@user_id", Session.UserID);
 
-            SqlDataReader dr = cmd.ExecuteReader();
+                SqlDataReader dr = cmd.ExecuteReader();
 
-            DataTable dt = new DataTable();
-            dt.Load(dr);
+                DataTable dt = new DataTable();
+                dt.Load(dr);
 
-            dgvMyComplaints.DataSource = dt;
+                dgvMyComplaints.DataSource = dt;
 
-            dgvMyComplaints.AutoSizeColumnsMode =
-                DataGridViewAutoSizeColumnsMode.Fill;
+                dgvMyComplaints.AutoSizeColumnsMode =
+                    DataGridViewAutoSizeColumnsMode.Fill;
 
-            dgvMyComplaints.SelectionMode =
-                DataGridViewSelectionMode.FullRowSelect;
+                dgvMyComplaints.SelectionMode =
+                    DataGridViewSelectionMode.FullRowSelect;
 
-            dgvMyComplaints.ReadOnly = true;
-
-            conn.Close();
+                dgvMyComplaints.ReadOnly = true;
+            }
         }
 
+        // CLEAR FORM
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtTitle.Clear();
             txtDescription.Clear();
-
-            if (cmbUser.Items.Count > 0)
-                cmbUser.SelectedIndex = 0;
 
             if (cmbCategory.Items.Count > 0)
                 cmbCategory.SelectedIndex = 0;
@@ -175,59 +178,12 @@ namespace F14_ComplaintRegisterSystem
             txtTitle.Focus();
         }
 
+        // BACK BUTTON
         private void btnBack_Click(object sender, EventArgs e)
         {
             FrmConnection frm = new FrmConnection();
             frm.Show();
             this.Close();
-        }
-
-        private void btnAddUser_Click(object sender, EventArgs e)
-        {
-            if (txtNewName.Text.Trim() == "" ||
-                txtNewEmail.Text.Trim() == "" ||
-                txtNewPassword.Text.Trim() == "")
-            {
-                MessageBox.Show("Please fill all required fields.");
-                return;
-            }
-
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand(
-                @"INSERT INTO dbo.users
-        (
-            full_name,
-            email,
-            password,
-            role
-        )
-        VALUES
-        (
-            @name,
-            @email,
-            @password,
-            'Citizen'
-        )", conn);
-
-            cmd.Parameters.AddWithValue("@name", txtNewName.Text.Trim());
-            cmd.Parameters.AddWithValue("@email", txtNewEmail.Text.Trim());
-            cmd.Parameters.AddWithValue("@password", txtNewPassword.Text.Trim());
-
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-
-            MessageBox.Show("New user added successfully.");
-
-            LoadUsers();
-
-            txtNewName.Clear();
-            txtNewEmail.Clear();
-            txtNewPassword.Clear();
-
-            txtNewName.Focus();
         }
     }
 }

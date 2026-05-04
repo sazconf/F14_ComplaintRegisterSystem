@@ -28,8 +28,8 @@ namespace F14_ComplaintRegisterSystem
                     conn.Open();
 
                     lblStatus.Text = "Status: Connected";
-                    btnEnter.Enabled = true;
-                    btnUserPanel.Enabled = true;
+                    
+                    
 
                     MessageBox.Show("Database connected successfully.");
                 }
@@ -37,24 +37,45 @@ namespace F14_ComplaintRegisterSystem
             catch (Exception ex)
             {
                 lblStatus.Text = "Status: Failed";
-                btnEnter.Enabled = false;
+                
 
                 MessageBox.Show("Connection failed: " + ex.Message);
             }
         }
 
-        private void btnEnter_Click(object sender, EventArgs e)
-        {
-            FrmComplaint frm = new FrmComplaint();
-            frm.Show();
-            this.Hide();
-        }
+        
 
         private void btnUserPanel_Click(object sender, EventArgs e)
         {
             FrmUserPanel frm = new FrmUserPanel();
             frm.Show();
             this.Hide();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            FrmLogin frm = new FrmLogin();
+            frm.Show();
+            this.Hide();
+        }
+
+        private void btnRegistration_Click(object sender, EventArgs e)
+        {
+            FrmRegister frm = new FrmRegister();
+            frm.Show();
+            this.Hide();
+        }
+
+        private void btnAdminLogin_Click(object sender, EventArgs e)
+        {
+            FrmAdminLogin frm = new FrmAdminLogin();
+            frm.Show();
+            this.Hide();
+        }
+
+        private void FrmConnection_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

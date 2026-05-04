@@ -31,8 +31,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.btnTest = new System.Windows.Forms.Button();
-            this.btnEnter = new System.Windows.Forms.Button();
-            this.btnUserPanel = new System.Windows.Forms.Button();
+            this.btnLogin = new System.Windows.Forms.Button();
+            this.btnRegistration = new System.Windows.Forms.Button();
+            this.btnAdminLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -64,40 +65,50 @@
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
-            // btnEnter
+            // btnLogin
             // 
-            this.btnEnter.Enabled = false;
-            this.btnEnter.Location = new System.Drawing.Point(258, 185);
-            this.btnEnter.Name = "btnEnter";
-            this.btnEnter.Size = new System.Drawing.Size(113, 23);
-            this.btnEnter.TabIndex = 3;
-            this.btnEnter.Text = "Admin Panel";
-            this.btnEnter.UseVisualStyleBackColor = true;
-            this.btnEnter.Click += new System.EventHandler(this.btnEnter_Click);
+            this.btnLogin.Location = new System.Drawing.Point(271, 184);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(101, 23);
+            this.btnLogin.TabIndex = 4;
+            this.btnLogin.Text = "User Login";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // btnUserPanel
+            // btnRegistration
             // 
-            this.btnUserPanel.Enabled = false;
-            this.btnUserPanel.Location = new System.Drawing.Point(397, 185);
-            this.btnUserPanel.Name = "btnUserPanel";
-            this.btnUserPanel.Size = new System.Drawing.Size(128, 23);
-            this.btnUserPanel.TabIndex = 4;
-            this.btnUserPanel.Text = "User Panel";
-            this.btnUserPanel.UseVisualStyleBackColor = true;
-            this.btnUserPanel.Click += new System.EventHandler(this.btnUserPanel_Click);
+            this.btnRegistration.Location = new System.Drawing.Point(403, 184);
+            this.btnRegistration.Name = "btnRegistration";
+            this.btnRegistration.Size = new System.Drawing.Size(141, 23);
+            this.btnRegistration.TabIndex = 5;
+            this.btnRegistration.Text = "User Registration";
+            this.btnRegistration.UseVisualStyleBackColor = true;
+            this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
+            // 
+            // btnAdminLogin
+            // 
+            this.btnAdminLogin.Location = new System.Drawing.Point(42, 401);
+            this.btnAdminLogin.Name = "btnAdminLogin";
+            this.btnAdminLogin.Size = new System.Drawing.Size(203, 23);
+            this.btnAdminLogin.TabIndex = 6;
+            this.btnAdminLogin.Text = "Admin Login";
+            this.btnAdminLogin.UseVisualStyleBackColor = true;
+            this.btnAdminLogin.Click += new System.EventHandler(this.btnAdminLogin_Click);
             // 
             // FrmConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnUserPanel);
-            this.Controls.Add(this.btnEnter);
+            this.Controls.Add(this.btnAdminLogin);
+            this.Controls.Add(this.btnRegistration);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label1);
             this.Name = "FrmConnection";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.FrmConnection_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -108,8 +119,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Button btnTest;
-        private System.Windows.Forms.Button btnEnter;
-        private System.Windows.Forms.Button btnUserPanel;
+        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Button btnRegistration;
+        private System.Windows.Forms.Button btnAdminLogin;
     }
 }
 

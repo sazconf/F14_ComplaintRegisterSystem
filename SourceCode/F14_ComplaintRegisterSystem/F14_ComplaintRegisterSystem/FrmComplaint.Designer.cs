@@ -204,6 +204,7 @@
             this.txtRejectReason.Name = "txtRejectReason";
             this.txtRejectReason.Size = new System.Drawing.Size(386, 127);
             this.txtRejectReason.TabIndex = 15;
+            this.txtRejectReason.TextChanged += new System.EventHandler(this.cmbStatus_SelectedIndexChanged);
             // 
             // txtTitle
             // 

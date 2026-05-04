@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
+
 namespace F14_ComplaintRegisterSystem
 {
     public partial class FrmComplaint : Form
     {
-        
         public FrmComplaint()
         {
             InitializeComponent();
@@ -21,177 +21,168 @@ namespace F14_ComplaintRegisterSystem
             LoadUsers();
             LoadCategories();
             LoadStatus();
-
             LoadTotalRecords();
 
+            // Lock date
+            dtpDate.Enabled = false;
+
+            // Disable reject reason initially
+            
         }
 
+        // LOAD USERS
         private void LoadUsers()
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT user_id, full_name FROM dbo.users WHERE role='Citizen'", conn);
 
-            SqlCommand cmd = new SqlCommand("SELECT user_id, full_name FROM dbo.users WHERE role='Citizen'", conn);
-            SqlDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
 
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-
-            cmbUser.DataSource = dt;
-            cmbUser.DisplayMember = "full_name";
-            cmbUser.ValueMember = "user_id";
-
-            conn.Close();
+                cmbUser.DataSource = dt;
+                cmbUser.DisplayMember = "full_name";
+                cmbUser.ValueMember = "user_id";
+            }
         }
 
+        // LOAD CATEGORIES
         private void LoadCategories()
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT category_id, category_name FROM dbo.categories", conn);
 
-            SqlCommand cmd = new SqlCommand("SELECT category_id, category_name FROM dbo.categories", conn);
-            SqlDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
 
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-
-            cmbCategory.DataSource = dt;
-            cmbCategory.DisplayMember = "category_name";
-            cmbCategory.ValueMember = "category_id";
-
-            conn.Close();
+                cmbCategory.DataSource = dt;
+                cmbCategory.DisplayMember = "category_name";
+                cmbCategory.ValueMember = "category_id";
+            }
         }
 
+        // LOAD STATUS
         private void LoadStatus()
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT status_id, status_name FROM dbo.status", conn);
 
-            SqlCommand cmd = new SqlCommand("SELECT status_id, status_name FROM dbo.status", conn);
-            SqlDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
 
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-
-            cmbStatus.DataSource = dt;
-            cmbStatus.DisplayMember = "status_name";
-            cmbStatus.ValueMember = "status_id";
-
-            conn.Close();
+                cmbStatus.DataSource = dt;
+                cmbStatus.DisplayMember = "status_name";
+                cmbStatus.ValueMember = "status_id";
+            }
         }
 
+        // STATUS CHANGE EVENT
+        private void cmbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtRejectReason.Enabled = true; // ALWAYS enabled
+
+            if (cmbStatus.SelectedValue != null && cmbStatus.SelectedValue.ToString() != "5")
+            {
+                txtRejectReason.Clear();
+            }
+        }
+
+        // INSERT
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            // Validation
-            if (cmbUser.SelectedIndex == -1)
+            if (cmbUser.SelectedIndex == -1 ||
+                cmbCategory.SelectedIndex == -1 ||
+                txtTitle.Text.Trim() == "" ||
+                txtDescription.Text.Trim() == "")
             {
-                MessageBox.Show("Please select a citizen.");
-                cmbUser.Focus();
+                MessageBox.Show("Fill all required fields.");
                 return;
             }
 
-            if (cmbCategory.SelectedIndex == -1)
+            if (cmbStatus.Text == "Rejected")
             {
-                MessageBox.Show("Please select a category.");
-                cmbCategory.Focus();
-                return;
+                if (txtRejectReason.Text.Trim() == "" || txtRejectReason.Text.Length < 5)
+                {
+                    MessageBox.Show("Enter valid rejection reason.");
+                    return;
+                }
             }
 
-            if (txtTitle.Text.Trim() == "")
+            try
             {
-                MessageBox.Show("Please enter complaint title.");
-                txtTitle.Focus();
-                return;
-            }
+                using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+                {
+                    conn.Open();
 
-            if (txtDescription.Text.Trim() == "")
+                    SqlCommand cmd = new SqlCommand(
+                        @"INSERT INTO dbo.complaints
+                        (user_id, category_id, status_id, title, description, report_date, rejection_reason)
+                        VALUES
+                        (@user_id, @category_id, @status_id, @title, @description, @report_date, @rejection_reason)", conn);
+
+                    cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
+                    cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
+                    cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
+                    cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
+                    cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
+                    cmd.Parameters.AddWithValue("@report_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                LoadTotalRecords();
+                MessageBox.Show("Complaint inserted successfully.");
+                btnShow.PerformClick();
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Please enter complaint description.");
-                txtDescription.Focus();
-                return;
+                MessageBox.Show("Error: " + ex.Message);
             }
-
-            if (cmbStatus.Text == "Rejected" && txtRejectReason.Text.Trim() == "")
-            {
-                MessageBox.Show("Please enter rejection reason.");
-                txtRejectReason.Focus();
-                return;
-            }
-
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand(
-                @"INSERT INTO dbo.complaints
-        (
-            user_id,
-            category_id,
-            status_id,
-            title,
-            description,
-            report_date,
-            rejection_reason
-        )
-        VALUES
-        (
-            @user_id,
-            @category_id,
-            @status_id,
-            @title,
-            @description,
-            @report_date,
-            @rejection_reason
-        )", conn);
-
-            cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
-            cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
-            cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
-            cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
-            cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-            cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
-            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
-
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-
-            LoadTotalRecords();
-
-            MessageBox.Show("Complaint inserted successfully.");
-
-            btnShow.PerformClick();
         }
 
+        // SHOW
         private void btnShow_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
 
-            SqlCommand cmd = new SqlCommand(@"
-        SELECT 
-            c.complaint_id,
-            u.full_name AS Citizen,
-            cat.category_name AS Category,
-            s.status_name AS Status,
-            c.title,
-            c.description,
-            c.report_date,
-            c.rejection_reason
-        FROM dbo.complaints c
-        INNER JOIN dbo.users u ON c.user_id = u.user_id
-        INNER JOIN dbo.categories cat ON c.category_id = cat.category_id
-        INNER JOIN dbo.status s ON c.status_id = s.status_id", conn);
+                SqlCommand cmd = new SqlCommand(@"
+                    SELECT 
+                        c.complaint_id,
+                        u.full_name AS Citizen,
+                        cat.category_name AS Category,
+                        s.status_name AS Status,
+                        c.title,
+                        c.description,
+                        c.report_date,
+                        c.rejection_reason
+                    FROM dbo.complaints c
+                    INNER JOIN dbo.users u ON c.user_id = u.user_id
+                    INNER JOIN dbo.categories cat ON c.category_id = cat.category_id
+                    INNER JOIN dbo.status s ON c.status_id = s.status_id", conn);
 
-            SqlDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
 
-            DataTable dt = new DataTable();
-            dt.Load(dr);
+                dgvComplaints.DataSource = dt;
 
-            dgvComplaints.DataSource = dt;
-
-            conn.Close();
+                dgvComplaints.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvComplaints.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvComplaints.ReadOnly = true;
+            }
         }
 
+        // GRID CLICK
         private void dgvComplaints_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -203,183 +194,149 @@ namespace F14_ComplaintRegisterSystem
                 txtDescription.Text = row.Cells["description"].Value.ToString();
                 txtRejectReason.Text = row.Cells["rejection_reason"].Value.ToString();
 
-                dtpDate.Value = Convert.ToDateTime(row.Cells["report_date"].Value);
-
                 cmbUser.Text = row.Cells["Citizen"].Value.ToString();
                 cmbCategory.Text = row.Cells["Category"].Value.ToString();
                 cmbStatus.Text = row.Cells["Status"].Value.ToString();
             }
         }
 
+        // UPDATE
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            // Must select record first
-            if (txtComplaintID.Text.Trim() == "")
+            if (txtComplaintID.Text == "")
             {
-                MessageBox.Show("Please select a complaint first.");
+                MessageBox.Show("Select a complaint first.");
                 return;
             }
 
-            // Validation
-            if (cmbUser.SelectedIndex == -1)
+            if (cmbStatus.Text == "Rejected" &&
+                (txtRejectReason.Text.Trim() == "" || txtRejectReason.Text.Length < 5))
             {
-                MessageBox.Show("Please select a citizen.");
-                cmbUser.Focus();
-                return;
-            }
-
-            if (cmbCategory.SelectedIndex == -1)
-            {
-                MessageBox.Show("Please select a category.");
-                cmbCategory.Focus();
-                return;
-            }
-
-            if (txtTitle.Text.Trim() == "")
-            {
-                MessageBox.Show("Please enter complaint title.");
-                txtTitle.Focus();
-                return;
-            }
-
-            if (txtDescription.Text.Trim() == "")
-            {
-                MessageBox.Show("Please enter complaint description.");
-                txtDescription.Focus();
-                return;
-            }
-
-            if (cmbStatus.Text == "Rejected" && txtRejectReason.Text.Trim() == "")
-            {
-                MessageBox.Show("Please enter rejection reason.");
-                txtRejectReason.Focus();
+                MessageBox.Show("Enter valid rejection reason.");
                 return;
             }
 
             DialogResult result = MessageBox.Show(
-                "Are you sure you want to update this complaint?",
-                "Confirm Update",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+                "Update this complaint?", "Confirm", MessageBoxButtons.YesNo);
 
-            if (result == DialogResult.No)
-                return;
+            if (result == DialogResult.No) return;
 
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+                {
+                    conn.Open();
 
-            SqlCommand cmd = new SqlCommand(
-                @"UPDATE dbo.complaints
-          SET user_id = @user_id,
-              category_id = @category_id,
-              status_id = @status_id,
-              title = @title,
-              description = @description,
-              report_date = @report_date,
-              rejection_reason = @rejection_reason
-          WHERE complaint_id = @complaint_id", conn);
+                    SqlCommand cmd = new SqlCommand(
+                        @"UPDATE dbo.complaints
+                          SET user_id=@user_id,
+                              category_id=@category_id,
+                              status_id=@status_id,
+                              title=@title,
+                              description=@description,
+                              report_date=@report_date,
+                              rejection_reason=@rejection_reason
+                          WHERE complaint_id=@id", conn);
 
-            cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
-            cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
-            cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
-            cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
-            cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-            cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
-            cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
-            cmd.Parameters.AddWithValue("@complaint_id", txtComplaintID.Text);
+                    cmd.Parameters.AddWithValue("@user_id", cmbUser.SelectedValue);
+                    cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
+                    cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
+                    cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
+                    cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
+                    cmd.Parameters.AddWithValue("@report_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
+                    cmd.Parameters.AddWithValue("@id", txtComplaintID.Text);
 
-            cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
 
-            conn.Close();
-
-            LoadTotalRecords();
-
-            MessageBox.Show("Complaint updated successfully.");
-
-            btnShow.PerformClick();
+                LoadTotalRecords();
+                MessageBox.Show("Updated successfully.");
+                btnShow.PerformClick();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
+        // DELETE
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (txtComplaintID.Text == "")
             {
-                MessageBox.Show("Please select a complaint first.");
+                MessageBox.Show("Select a complaint first.");
                 return;
             }
 
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to delete this record?",
-                "Confirm Delete",
-                MessageBoxButtons.YesNo);
-
-            if (result == DialogResult.No)
+            if (MessageBox.Show("Delete this record?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
 
-            SqlCommand cmd = new SqlCommand(
-                "DELETE FROM dbo.complaints WHERE complaint_id = @complaint_id", conn);
+                SqlCommand cmd = new SqlCommand(
+                    "DELETE FROM dbo.complaints WHERE complaint_id=@id", conn);
 
-            cmd.Parameters.AddWithValue("@complaint_id", txtComplaintID.Text);
+                cmd.Parameters.AddWithValue("@id", txtComplaintID.Text);
+                cmd.ExecuteNonQuery();
+            }
 
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-
-            MessageBox.Show("Complaint deleted successfully.");
-
+            MessageBox.Show("Deleted successfully.");
             btnShow.PerformClick();
         }
 
+        // SEARCH
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
+            if (txtSearch.Text.Trim() == "")
+            {
+                MessageBox.Show("Enter search keyword.");
+                return;
+            }
 
-            SqlCommand cmd = new SqlCommand(@"
-        SELECT 
-            c.complaint_id,
-            u.full_name AS Citizen,
-            cat.category_name AS Category,
-            s.status_name AS Status,
-            c.title,
-            c.description,
-            c.report_date,
-            c.rejection_reason
-        FROM dbo.complaints c
-        INNER JOIN dbo.users u ON c.user_id = u.user_id
-        INNER JOIN dbo.categories cat ON c.category_id = cat.category_id
-        INNER JOIN dbo.status s ON c.status_id = s.status_id
-        WHERE c.title LIKE @search
-           OR u.full_name LIKE @search", conn);
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
 
-            cmd.Parameters.AddWithValue("@search", "%" + txtSearch.Text + "%");
+                SqlCommand cmd = new SqlCommand(@"
+                    SELECT 
+                        c.complaint_id,
+                        u.full_name AS Citizen,
+                        cat.category_name AS Category,
+                        s.status_name AS Status,
+                        c.title,
+                        c.description,
+                        c.report_date,
+                        c.rejection_reason
+                    FROM dbo.complaints c
+                    INNER JOIN dbo.users u ON c.user_id = u.user_id
+                    INNER JOIN dbo.categories cat ON c.category_id = cat.category_id
+                    INNER JOIN dbo.status s ON c.status_id = s.status_id
+                    WHERE c.title LIKE @search OR u.full_name LIKE @search", conn);
 
-            SqlDataReader dr = cmd.ExecuteReader();
+                cmd.Parameters.AddWithValue("@search", "%" + txtSearch.Text + "%");
 
-            DataTable dt = new DataTable();
-            dt.Load(dr);
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
 
-            dgvComplaints.DataSource = dt;
-
-            conn.Close();
+                dgvComplaints.DataSource = dt;
+            }
         }
 
+        // TOTAL RECORDS
         private void LoadTotalRecords()
         {
-            SqlConnection conn = new SqlConnection(DBHelper.ConnStr);
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM dbo.complaints", conn);
-
-            int total = (int)cmd.ExecuteScalar();
-
-            lblTotal.Text = "Total Records: " + total;
-
-            conn.Close();
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM dbo.complaints", conn);
+                lblTotal.Text = "Total Records: " + cmd.ExecuteScalar().ToString();
+            }
         }
 
+        // CLEAR
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtComplaintID.Clear();
@@ -388,20 +345,14 @@ namespace F14_ComplaintRegisterSystem
             txtRejectReason.Clear();
             txtSearch.Clear();
 
-            if (cmbUser.Items.Count > 0)
-                cmbUser.SelectedIndex = 0;
-
-            if (cmbCategory.Items.Count > 0)
-                cmbCategory.SelectedIndex = 0;
-
-            if (cmbStatus.Items.Count > 0)
-                cmbStatus.SelectedIndex = 0;
-
-            dtpDate.Value = DateTime.Now;
+            cmbUser.SelectedIndex = 0;
+            cmbCategory.SelectedIndex = 0;
+            cmbStatus.SelectedIndex = 0;
 
             txtTitle.Focus();
         }
 
+        // BACK
         private void btnBack_Click(object sender, EventArgs e)
         {
             FrmConnection frm = new FrmConnection();
