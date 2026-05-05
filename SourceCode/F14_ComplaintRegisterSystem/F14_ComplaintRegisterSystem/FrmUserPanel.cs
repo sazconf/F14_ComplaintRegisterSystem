@@ -185,5 +185,16 @@ namespace F14_ComplaintRegisterSystem
             frm.Show();
             this.Close();
         }
+
+        private void txtTitle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow letters, digits, space, and backspace
+            if (!char.IsLetterOrDigit(e.KeyChar) &&
+                !char.IsControl(e.KeyChar) &&
+                e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

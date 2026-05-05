@@ -212,6 +212,8 @@
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(254, 22);
             this.txtTitle.TabIndex = 16;
+            this.txtTitle.TextChanged += new System.EventHandler(this.txtTitle_TextChanged);
+            this.txtTitle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTitle_KeyPress);
             // 
             // txtDescription
             // 

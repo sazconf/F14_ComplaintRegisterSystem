@@ -71,6 +71,7 @@
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(330, 22);
             this.txtTitle.TabIndex = 3;
+            this.txtTitle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTitle_KeyPress);
             // 
             // label3
             // 

@@ -24,10 +24,14 @@ namespace F14_ComplaintRegisterSystem
             LoadTotalRecords();
 
             // Lock date
-            dtpDate.Enabled = false;
+            dtpDate.Enabled = true;
 
-            // Disable reject reason initially
-            
+
+
+            //DTP Validation
+            dtpDate.MinDate = new DateTime(2010, 1, 1);
+            dtpDate.MaxDate = new DateTime(2050, 12, 31);
+
         }
 
         // LOAD USERS
@@ -133,7 +137,7 @@ namespace F14_ComplaintRegisterSystem
                     cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
                     cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
                     cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-                    cmd.Parameters.AddWithValue("@report_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
                     cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
 
                     cmd.ExecuteNonQuery();
@@ -243,7 +247,7 @@ namespace F14_ComplaintRegisterSystem
                     cmd.Parameters.AddWithValue("@status_id", cmbStatus.SelectedValue);
                     cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
                     cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-                    cmd.Parameters.AddWithValue("@report_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@report_date", dtpDate.Value.Date);
                     cmd.Parameters.AddWithValue("@rejection_reason", txtRejectReason.Text.Trim());
                     cmd.Parameters.AddWithValue("@id", txtComplaintID.Text);
 
@@ -358,6 +362,22 @@ namespace F14_ComplaintRegisterSystem
             FrmConnection frm = new FrmConnection();
             frm.Show();
             this.Close();
+        }
+
+        private void txtTitle_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTitle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow letters, digits, space, and backspace
+            if (!char.IsLetterOrDigit(e.KeyChar) &&
+                !char.IsControl(e.KeyChar) &&
+                e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
         }
     }
 }
