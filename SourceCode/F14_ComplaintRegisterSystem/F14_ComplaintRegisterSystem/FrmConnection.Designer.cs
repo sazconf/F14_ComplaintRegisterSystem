@@ -39,17 +39,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(253, 9);
+            this.label1.Font = new System.Drawing.Font("Calibri", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(153, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(272, 25);
+            this.label1.Size = new System.Drawing.Size(473, 35);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Complaint Register System";
+            this.label1.Text = "Welcome to Complaint Register System";
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(39, 96);
+            this.lblStatus.Location = new System.Drawing.Point(38, 121);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(139, 16);
             this.lblStatus.TabIndex = 1;
@@ -57,48 +57,53 @@
             // 
             // btnTest
             // 
+            this.btnTest.BackColor = System.Drawing.Color.CornflowerBlue;
             this.btnTest.Location = new System.Drawing.Point(30, 70);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(159, 23);
+            this.btnTest.Size = new System.Drawing.Size(147, 48);
             this.btnTest.TabIndex = 2;
             this.btnTest.Text = "Connect";
-            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.UseVisualStyleBackColor = false;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(271, 184);
+            this.btnLogin.BackColor = System.Drawing.Color.MediumSpringGreen;
+            this.btnLogin.Location = new System.Drawing.Point(235, 184);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(101, 23);
+            this.btnLogin.Size = new System.Drawing.Size(148, 54);
             this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "User Login";
-            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // btnRegistration
             // 
-            this.btnRegistration.Location = new System.Drawing.Point(403, 184);
+            this.btnRegistration.BackColor = System.Drawing.Color.MediumSpringGreen;
+            this.btnRegistration.Location = new System.Drawing.Point(410, 184);
             this.btnRegistration.Name = "btnRegistration";
-            this.btnRegistration.Size = new System.Drawing.Size(141, 23);
+            this.btnRegistration.Size = new System.Drawing.Size(148, 54);
             this.btnRegistration.TabIndex = 5;
             this.btnRegistration.Text = "User Registration";
-            this.btnRegistration.UseVisualStyleBackColor = true;
+            this.btnRegistration.UseVisualStyleBackColor = false;
             this.btnRegistration.Click += new System.EventHandler(this.btnRegistration_Click);
             // 
             // btnAdminLogin
             // 
-            this.btnAdminLogin.Location = new System.Drawing.Point(42, 401);
+            this.btnAdminLogin.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnAdminLogin.Location = new System.Drawing.Point(30, 388);
             this.btnAdminLogin.Name = "btnAdminLogin";
-            this.btnAdminLogin.Size = new System.Drawing.Size(203, 23);
+            this.btnAdminLogin.Size = new System.Drawing.Size(203, 50);
             this.btnAdminLogin.TabIndex = 6;
             this.btnAdminLogin.Text = "Admin Login";
-            this.btnAdminLogin.UseVisualStyleBackColor = true;
+            this.btnAdminLogin.UseVisualStyleBackColor = false;
             this.btnAdminLogin.Click += new System.EventHandler(this.btnAdminLogin_Click);
             // 
             // FrmConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnAdminLogin);
             this.Controls.Add(this.btnRegistration);

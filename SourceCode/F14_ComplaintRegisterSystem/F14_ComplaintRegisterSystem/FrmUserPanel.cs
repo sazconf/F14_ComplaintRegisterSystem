@@ -62,95 +62,108 @@ namespace F14_ComplaintRegisterSystem
 
             if (txtDescription.Text.Trim() == "")
             {
-                MessageBox.Show("Enter description.");
-                return;
-            }
-
-            // Prevent very short complaints
-            if (txtDescription.Text.Length < 10)
-            {
-                MessageBox.Show("Description must be at least 10 characters.");
+                MessageBox.Show(
+                    "Enter complaint description.");
                 return;
             }
 
             if (txtTitle.Text.Length < 5)
             {
-                MessageBox.Show("Title too short.");
+                MessageBox.Show(
+                    "Title must be at least 5 characters.");
                 return;
             }
 
-            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            if (txtDescription.Text.Length < 10)
             {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand(
-                    @"INSERT INTO dbo.complaints
-                    (
-                        user_id,
-                        category_id,
-                        status_id,
-                        title,
-                        description,
-                        report_date,
-                        rejection_reason
-                    )
-                    VALUES
-                    (
-                        @user_id,
-                        @category_id,
-                        1,
-                        @title,
-                        @description,
-                        @report_date,
-                        ''
-                    )", conn);
-
-                cmd.Parameters.AddWithValue("@user_id", Session.UserID);
-                cmd.Parameters.AddWithValue("@category_id", cmbCategory.SelectedValue);
-                cmd.Parameters.AddWithValue("@title", txtTitle.Text.Trim());
-                cmd.Parameters.AddWithValue("@description", txtDescription.Text.Trim());
-                cmd.Parameters.AddWithValue("@report_date", DateTime.Now);
-
-                cmd.ExecuteNonQuery();
+                MessageBox.Show(
+                    "Description must be at least 10 characters.");
+                return;
             }
 
-            MessageBox.Show("Complaint submitted successfully.");
+            try
+            {
+                using (SqlConnection conn =
+                    new SqlConnection(DBHelper.ConnStr))
+                {
+                    conn.Open();
 
-            txtTitle.Clear();
-            txtDescription.Clear();
+                    SqlCommand cmd = new SqlCommand(
+                        "sp_InsertComplaint",
+                        conn);
 
-            btnView.PerformClick();
+                    cmd.CommandType =
+                        CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue(
+                        "@user_id",
+                        Session.UserID);
+
+                    cmd.Parameters.AddWithValue(
+                        "@category_id",
+                        cmbCategory.SelectedValue);
+
+                    cmd.Parameters.AddWithValue(
+                        "@status_id",
+                        1);
+
+                    cmd.Parameters.AddWithValue(
+                        "@title",
+                        txtTitle.Text.Trim());
+
+                    cmd.Parameters.AddWithValue(
+                        "@description",
+                        txtDescription.Text.Trim());
+
+                    cmd.Parameters.AddWithValue(
+                        "@report_date",
+                        dtpDate.Value.Date);
+
+                    cmd.Parameters.AddWithValue(
+                        "@rejection_reason",
+                        "");
+
+                    cmd.ExecuteNonQuery();
+
+                    MessageBox.Show(
+                        "Complaint submitted successfully.");
+
+                    btnView.PerformClick();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error: " + ex.Message);
+            }
         }
 
         // VIEW MY COMPLAINTS
         private void btnView_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
+            using (SqlConnection conn =
+                new SqlConnection(DBHelper.ConnStr))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(@"
-                    SELECT
-                        c.complaint_id,
-                        c.title,
-                        c.description,
-                        cat.category_name AS Category,
-                        s.status_name AS Status,
-                        c.report_date,
-                        c.rejection_reason
-                    FROM dbo.complaints c
-                    INNER JOIN dbo.categories cat ON c.category_id = cat.category_id
-                    INNER JOIN dbo.status s ON c.status_id = s.status_id
-                    WHERE c.user_id = @user_id", conn);
+                SqlCommand cmd = new SqlCommand(
+                    "sp_ViewUserComplaints",
+                    conn);
 
-                cmd.Parameters.AddWithValue("@user_id", Session.UserID);
+                cmd.CommandType =
+                    CommandType.StoredProcedure;
 
-                SqlDataReader dr = cmd.ExecuteReader();
+                cmd.Parameters.AddWithValue(
+                    "@user_id",
+                    Session.UserID);
 
                 DataTable dt = new DataTable();
-                dt.Load(dr);
 
-                dgvMyComplaints.DataSource = dt;
+                dt.Load(cmd.ExecuteReader());
+
+                bindingSource1.DataSource = dt;
+                dgvMyComplaints.DataSource =
+                    bindingSource1;
 
                 dgvMyComplaints.AutoSizeColumnsMode =
                     DataGridViewAutoSizeColumnsMode.Fill;
@@ -194,6 +207,30 @@ namespace F14_ComplaintRegisterSystem
                 e.KeyChar != ' ')
             {
                 e.Handled = true;
+            }
+        }
+
+        private void dgvMyComplaints_CellClick(
+    object sender,
+    DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row =
+                    dgvMyComplaints.Rows[e.RowIndex];
+
+                txtTitle.Text =
+                    row.Cells["title"].Value.ToString();
+
+                txtDescription.Text =
+                    row.Cells["description"].Value.ToString();
+
+                cmbCategory.Text =
+                    row.Cells["Category"].Value.ToString();
+
+                dtpDate.Value =
+                    Convert.ToDateTime(
+                        row.Cells["report_date"].Value);
             }
         }
     }

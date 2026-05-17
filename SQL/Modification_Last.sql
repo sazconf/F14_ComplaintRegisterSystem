@@ -176,3 +176,13 @@ ALTER TABLE complaints
 ADD CONSTRAINT CHK_title CHECK (LEN(title) >= 5);
 
 
+---------add admin-------------
+
+INSERT INTO users (full_name, email, password, role)
+VALUES ('Admin', 'admin2@test.com', '123456', 'Admin');
+
+
+SELECT user_id, full_name, email, password, role 
+FROM users;
+
+SELECT * FROM status
