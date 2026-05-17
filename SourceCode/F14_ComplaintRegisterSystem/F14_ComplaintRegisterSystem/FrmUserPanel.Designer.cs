@@ -59,6 +59,9 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.btnUnsafeSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMyComplaints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -70,7 +73,7 @@
             this.lblUserWelcome.AutoSize = true;
             this.lblUserWelcome.BackColor = System.Drawing.Color.SkyBlue;
             this.lblUserWelcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserWelcome.Location = new System.Drawing.Point(418, 76);
+            this.lblUserWelcome.Location = new System.Drawing.Point(419, 76);
             this.lblUserWelcome.Name = "lblUserWelcome";
             this.lblUserWelcome.Size = new System.Drawing.Size(129, 25);
             this.lblUserWelcome.TabIndex = 0;
@@ -80,7 +83,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.SkyBlue;
-            this.label2.Location = new System.Drawing.Point(215, 137);
+            this.label2.Location = new System.Drawing.Point(191, 123);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(102, 16);
             this.label2.TabIndex = 2;
@@ -89,7 +92,7 @@
             // txtTitle
             // 
             this.txtTitle.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.txtTitle.Location = new System.Drawing.Point(341, 137);
+            this.txtTitle.Location = new System.Drawing.Point(317, 123);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(330, 22);
             this.txtTitle.TabIndex = 3;
@@ -99,7 +102,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.SkyBlue;
-            this.label3.Location = new System.Drawing.Point(215, 179);
+            this.label3.Location = new System.Drawing.Point(191, 165);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(78, 16);
             this.label3.TabIndex = 4;
@@ -108,7 +111,7 @@
             // txtDescription
             // 
             this.txtDescription.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.txtDescription.Location = new System.Drawing.Point(341, 179);
+            this.txtDescription.Location = new System.Drawing.Point(317, 165);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(330, 106);
@@ -118,7 +121,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.SkyBlue;
-            this.label4.Location = new System.Drawing.Point(218, 312);
+            this.label4.Location = new System.Drawing.Point(194, 298);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 16);
             this.label4.TabIndex = 6;
@@ -129,7 +132,7 @@
             this.cmbCategory.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(341, 309);
+            this.cmbCategory.Location = new System.Drawing.Point(317, 295);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(330, 24);
             this.cmbCategory.TabIndex = 7;
@@ -138,7 +141,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.SkyBlue;
-            this.label5.Location = new System.Drawing.Point(221, 354);
+            this.label5.Location = new System.Drawing.Point(197, 340);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(83, 16);
             this.label5.TabIndex = 8;
@@ -146,7 +149,9 @@
             // 
             // dtpDate
             // 
-            this.dtpDate.Location = new System.Drawing.Point(341, 354);
+            this.dtpDate.Location = new System.Drawing.Point(317, 340);
+            this.dtpDate.MaxDate = new System.DateTime(2300, 12, 31, 0, 0, 0, 0);
+            this.dtpDate.MinDate = new System.DateTime(1925, 1, 1, 0, 0, 0, 0);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(330, 22);
             this.dtpDate.TabIndex = 9;
@@ -154,7 +159,7 @@
             // btnSubmit
             // 
             this.btnSubmit.BackColor = System.Drawing.Color.LimeGreen;
-            this.btnSubmit.Location = new System.Drawing.Point(697, 323);
+            this.btnSubmit.Location = new System.Drawing.Point(673, 309);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(193, 53);
             this.btnSubmit.TabIndex = 10;
@@ -165,7 +170,7 @@
             // btnView
             // 
             this.btnView.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnView.Location = new System.Drawing.Point(697, 221);
+            this.btnView.Location = new System.Drawing.Point(673, 207);
             this.btnView.Name = "btnView";
             this.btnView.Size = new System.Drawing.Size(193, 53);
             this.btnView.TabIndex = 11;
@@ -175,8 +180,8 @@
             // 
             // btnClear
             // 
-            this.btnClear.BackColor = System.Drawing.Color.Crimson;
-            this.btnClear.Location = new System.Drawing.Point(697, 122);
+            this.btnClear.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnClear.Location = new System.Drawing.Point(673, 108);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(193, 53);
             this.btnClear.TabIndex = 12;
@@ -208,7 +213,7 @@
             // btnBack
             // 
             this.btnBack.BackColor = System.Drawing.Color.Cyan;
-            this.btnBack.Location = new System.Drawing.Point(12, 26);
+            this.btnBack.Location = new System.Drawing.Point(12, 58);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(100, 43);
             this.btnBack.TabIndex = 15;
@@ -221,7 +226,7 @@
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.LightPink;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(385, 29);
+            this.label6.Location = new System.Drawing.Point(385, 37);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(219, 29);
             this.label6.TabIndex = 17;
@@ -343,12 +348,44 @@
             this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(29, 24);
             this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(317, 385);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(330, 22);
+            this.txtSearch.TabIndex = 19;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSearch.Location = new System.Drawing.Point(673, 385);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(193, 32);
+            this.btnSearch.TabIndex = 20;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnUnsafeSearch
+            // 
+            this.btnUnsafeSearch.BackColor = System.Drawing.Color.Salmon;
+            this.btnUnsafeSearch.Location = new System.Drawing.Point(873, 385);
+            this.btnUnsafeSearch.Name = "btnUnsafeSearch";
+            this.btnUnsafeSearch.Size = new System.Drawing.Size(140, 32);
+            this.btnUnsafeSearch.TabIndex = 21;
+            this.btnUnsafeSearch.Text = "Unsafe Search";
+            this.btnUnsafeSearch.UseVisualStyleBackColor = false;
+            this.btnUnsafeSearch.Click += new System.EventHandler(this.btnUnsafeSearch_Click);
+            // 
             // FrmUserPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(1055, 653);
+            this.Controls.Add(this.btnUnsafeSearch);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnBack);
@@ -411,5 +448,8 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnUnsafeSearch;
     }
 }

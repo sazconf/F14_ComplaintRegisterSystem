@@ -276,7 +276,7 @@
             // 
             this.dtpDate.Location = new System.Drawing.Point(655, 172);
             this.dtpDate.MaxDate = new System.DateTime(2050, 1, 1, 0, 0, 0, 0);
-            this.dtpDate.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dtpDate.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(386, 22);
             this.dtpDate.TabIndex = 21;

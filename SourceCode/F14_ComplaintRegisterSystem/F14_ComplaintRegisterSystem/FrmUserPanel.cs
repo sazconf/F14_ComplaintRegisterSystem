@@ -233,5 +233,79 @@ namespace F14_ComplaintRegisterSystem
                         row.Cells["report_date"].Value);
             }
         }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (txtSearch.Text.Trim() == "")
+            {
+                MessageBox.Show("Enter search keyword.");
+                return;
+            }
+
+            using (SqlConnection conn =
+                new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(
+                    "sp_SearchUserComplaints",
+                    conn);
+
+                cmd.CommandType =
+                    CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue(
+                    "@user_id",
+                    Session.UserID);
+
+                cmd.Parameters.AddWithValue(
+                    "@search",
+                    txtSearch.Text.Trim());
+
+                DataTable dt = new DataTable();
+
+                dt.Load(cmd.ExecuteReader());
+
+                bindingSource1.DataSource = dt;
+                dgvMyComplaints.DataSource =
+                    bindingSource1;
+            }
+        }
+
+        private void btnUnsafeSearch_Click(
+    object sender,
+    EventArgs e)
+        {
+            if (txtSearch.Text.Trim() == "")
+            {
+                MessageBox.Show("Enter search keyword.");
+                return;
+            }
+
+            using (SqlConnection conn =
+                new SqlConnection(DBHelper.ConnStr))
+            {
+                conn.Open();
+
+                string query =
+                    "SELECT * FROM vw_Complaints " +
+                    "WHERE user_id = " +
+                    Session.UserID +
+                    " AND title LIKE '%" +
+                    txtSearch.Text.Trim() +
+                    "%'";
+
+                SqlDataAdapter da =
+                    new SqlDataAdapter(query, conn);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                bindingSource1.DataSource = dt;
+                dgvMyComplaints.DataSource =
+                    bindingSource1;
+            }
+        }
     }
 }

@@ -112,12 +112,47 @@ namespace F14_ComplaintRegisterSystem
                 return;
             }
 
+            // Title length validation
+            if (txtTitle.Text.Length < 5)
+            {
+                MessageBox.Show(
+                    "Title must be at least 5 characters.");
+                return;
+            }
+
+            // Description length validation
+            if (txtDescription.Text.Length < 10)
+            {
+                MessageBox.Show(
+                    "Description must be at least 10 characters.");
+                return;
+            }
+
+            // Date validation
+            DateTime selectedDate = dtpDate.Value.Date;
+
+            if (selectedDate > DateTime.Today)
+            {
+                MessageBox.Show(
+                    "Future dates are not allowed.");
+                return;
+            }
+
+            if (selectedDate < DateTime.Today.AddYears(-100))
+            {
+                MessageBox.Show(
+                    "Date cannot be older than 100 years.");
+                return;
+            }
+
+            // Rejection validation
             if (cmbStatus.Text == "Rejected")
             {
                 if (txtRejectReason.Text.Trim() == "" ||
                     txtRejectReason.Text.Length < 5)
                 {
-                    MessageBox.Show("Enter valid rejection reason.");
+                    MessageBox.Show(
+                        "Enter valid rejection reason.");
                     return;
                 }
             }
@@ -231,16 +266,54 @@ namespace F14_ComplaintRegisterSystem
         {
             if (txtComplaintID.Text == "")
             {
-                MessageBox.Show("Select a complaint first.");
+                MessageBox.Show(
+                    "Select a complaint first.");
                 return;
             }
 
-            if (cmbStatus.Text == "Rejected" &&
-                (txtRejectReason.Text.Trim() == "" ||
-                 txtRejectReason.Text.Length < 5))
+            // Title length validation
+            if (txtTitle.Text.Length < 5)
             {
-                MessageBox.Show("Enter valid rejection reason.");
+                MessageBox.Show(
+                    "Title must be at least 5 characters.");
                 return;
+            }
+
+            // Description length validation
+            if (txtDescription.Text.Length < 10)
+            {
+                MessageBox.Show(
+                    "Description must be at least 10 characters.");
+                return;
+            }
+
+            // Date validation
+            DateTime selectedDate = dtpDate.Value.Date;
+
+            if (selectedDate > DateTime.Today)
+            {
+                MessageBox.Show(
+                    "Future dates are not allowed.");
+                return;
+            }
+
+            if (selectedDate < DateTime.Today.AddYears(-100))
+            {
+                MessageBox.Show(
+                    "Date cannot be older than 100 years.");
+                return;
+            }
+
+            // Rejection validation
+            if (cmbStatus.Text == "Rejected")
+            {
+                if (txtRejectReason.Text.Trim() == "" ||
+                    txtRejectReason.Text.Length < 5)
+                {
+                    MessageBox.Show(
+                        "Enter valid rejection reason.");
+                    return;
+                }
             }
 
             DialogResult result = MessageBox.Show(

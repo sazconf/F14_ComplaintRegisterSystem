@@ -108,38 +108,43 @@
             // 
             // btnRegister
             // 
+            this.btnRegister.BackColor = System.Drawing.Color.SpringGreen;
             this.btnRegister.Location = new System.Drawing.Point(221, 245);
             this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(155, 23);
+            this.btnRegister.Size = new System.Drawing.Size(155, 38);
             this.btnRegister.TabIndex = 8;
             this.btnRegister.Text = "Register";
-            this.btnRegister.UseVisualStyleBackColor = true;
+            this.btnRegister.UseVisualStyleBackColor = false;
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
             // btnGoLogin
             // 
-            this.btnGoLogin.Location = new System.Drawing.Point(415, 245);
+            this.btnGoLogin.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnGoLogin.ForeColor = System.Drawing.Color.White;
+            this.btnGoLogin.Location = new System.Drawing.Point(414, 246);
             this.btnGoLogin.Name = "btnGoLogin";
-            this.btnGoLogin.Size = new System.Drawing.Size(163, 23);
+            this.btnGoLogin.Size = new System.Drawing.Size(163, 38);
             this.btnGoLogin.TabIndex = 9;
             this.btnGoLogin.Text = "Go to Login";
-            this.btnGoLogin.UseVisualStyleBackColor = true;
+            this.btnGoLogin.UseVisualStyleBackColor = false;
             this.btnGoLogin.Click += new System.EventHandler(this.btnGoLogin_Click);
             // 
             // btnBack
             // 
+            this.btnBack.BackColor = System.Drawing.Color.Cyan;
             this.btnBack.Location = new System.Drawing.Point(35, 13);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.Size = new System.Drawing.Size(75, 35);
             this.btnBack.TabIndex = 10;
             this.btnBack.Text = "Back";
-            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // FrmRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnGoLogin);
