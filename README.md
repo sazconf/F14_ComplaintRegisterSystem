@@ -17,7 +17,7 @@ The application was developed using:
 
 ---
 
-## Objectives
+# Objectives
 
 The system was designed with the following objectives:
 
@@ -39,6 +39,7 @@ Users can:
 - Login
 - Submit complaints
 - View submitted complaints
+- Search submitted complaints
 - Track complaint status
 
 ---
@@ -92,11 +93,13 @@ Admins can:
 
 ---
 
-## Search Functionality
+## Complaint Search System
 
-Admins can search complaints by:
-- complaint title
-- citizen name
+The system contains:
+- safe search implementation
+- unsafe search implementation
+
+for educational SQL Injection comparison.
 
 ---
 
@@ -164,6 +167,7 @@ The following Stored Procedures were implemented:
 | sp_DeleteComplaint | Delete complaint |
 | sp_SearchComplaint | Search complaints |
 | sp_ViewUserComplaints | View user complaints |
+| sp_SearchUserComplaints | Safe user complaint search |
 
 ---
 
@@ -179,6 +183,12 @@ Purpose:
 - simplify complex JOIN queries
 - improve query readability
 - centralize complaint display logic
+
+The VIEW includes:
+- complaint information
+- user information
+- category information
+- complaint status information
 
 ---
 
@@ -196,24 +206,49 @@ Purpose:
 
 # 4. SQL Injection Demonstration
 
-An intentionally vulnerable feature named:
+The system contains both:
+- secure search implementation
+- intentionally vulnerable search implementation
 
-```text
-Unsafe Search
-```
-
-was implemented for educational purposes to demonstrate SQL Injection vulnerability.
+for educational comparison purposes.
 
 ---
 
 # SQL Injection Scenario
 
-## Vulnerable Code
+## Safe Search
+
+The secure implementation uses:
+
+- Stored Procedures
+- Parameterized Queries
+
+Example:
+
+```csharp
+cmd.Parameters.AddWithValue("@search",
+    txtSearch.Text.Trim());
+```
+
+Purpose:
+- prevent malicious SQL execution
+- protect database records
+- maintain user data isolation
+
+---
+
+## Unsafe Search
+
+The vulnerable implementation directly concatenates user input into SQL queries.
+
+### Vulnerable Code
 
 ```csharp
 string query =
     "SELECT * FROM vw_Complaints " +
-    "WHERE title LIKE '%" +
+    "WHERE user_id = " +
+    Session.UserID +
+    " AND title LIKE '%" +
     txtSearch.Text.Trim() +
     "%'";
 ```
@@ -230,7 +265,12 @@ string query =
 
 ## Result
 
-The malicious input modifies the SQL query and causes all records to be returned by bypassing normal filtering conditions.
+The malicious input modifies the SQL query and bypasses filtering conditions.
+
+As a result:
+- all complaint records become visible
+- user isolation is broken
+- other users' complaint data can be accessed
 
 ---
 
@@ -245,12 +285,6 @@ The query directly concatenates user input into SQL syntax without parameterizat
 SQL Injection is prevented using:
 - parameterized queries
 - stored procedures
-
-Example:
-
-```csharp
-cmd.Parameters.AddWithValue("@search", txtSearch.Text.Trim());
-```
 
 ---
 
@@ -345,6 +379,7 @@ to prevent malicious SQL execution.
 - Confirmation dialogs before update/delete
 - Input validation
 - Controlled date selection
+- User complaint isolation
 
 ---
 
@@ -375,6 +410,8 @@ Add screenshots here:
 - User Panel
 - Admin Panel
 - BindingNavigator
+- Safe Search
+- Unsafe Search
 - SQL Injection Demonstration
 - Database Tables
 - Stored Procedures
@@ -424,4 +461,4 @@ Apriliya Kurnianti S.T., M.Eng
 
 # Conclusion
 
-The Environmental Complaint Management System successfully demonstrates the implementation of relational database concepts using ADO.NET and SQL Server in a desktop application environment. The project integrates CRUD operations, Stored Procedures, SQL Views, Data Binding, Validation, and SQL Injection demonstration to provide a structured and efficient complaint management workflow.
+The Environmental Complaint Management System successfully demonstrates the implementation of relational database concepts using ADO.NET and SQL Server in a desktop application environment. The project integrates CRUD operations, Stored Procedures, SQL Views, Data Binding, Validation, secure search systems, and SQL Injection demonstration to provide a structured and efficient complaint management workflow.
