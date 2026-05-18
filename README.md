@@ -1,4 +1,4 @@
-<img width="746" height="487" alt="image" src="https://github.com/user-attachments/assets/fbe954d5-1398-4691-b917-0c7756caee44" /># Environmental Complaint Management System
+# Environmental Complaint Management System
 
 Desktop-based Database Application using ADO.NET and SQL Server.
 
