@@ -405,17 +405,31 @@ Citizen Tracks Complaint Progress
 
 Add screenshots here:
 
+- Connection Form
+- <img width="745" height="488" alt="image" src="https://github.com/user-attachments/assets/95eaf899-1e47-4dfa-8de4-a02da5b6d74c" />
+
 - Login Form
+- <img width="746" height="487" alt="image" src="https://github.com/user-attachments/assets/7433ff23-a827-456b-9f58-454d92415bb1" />
+
 - Registration Form
+- <img width="747" height="490" alt="image" src="https://github.com/user-attachments/assets/2ad2db21-1c04-486d-ad8a-23bfafec92d1" />
+
 - User Panel
+- <img width="987" height="695" alt="image" src="https://github.com/user-attachments/assets/f84e62b8-6c0a-43e6-840f-ba4026940f35" />
+
 - Admin Panel
-- BindingNavigator
-- Safe Search
-- Unsafe Search
+- <img width="1068" height="697" alt="image" src="https://github.com/user-attachments/assets/722a9d7c-06cd-44d1-9cf3-40bf5bea1a2a" />
+
+- Search
+- <img width="1068" height="697" alt="image" src="https://github.com/user-attachments/assets/7d42cdd3-f1a6-44d1-845f-0c6a7a6c1e43" />
+
 - SQL Injection Demonstration
-- Database Tables
+- <img width="1076" height="696" alt="image" src="https://github.com/user-attachments/assets/7ce0ee06-8f05-4803-91b4-5031972fcdc0" />
+- 
 - Stored Procedures
-- VIEW
+- <img width="342" height="399" alt="image" src="https://github.com/user-attachments/assets/876838ed-c137-4834-bbac-dec71bd245bf" />
+
+
 
 ---
 
