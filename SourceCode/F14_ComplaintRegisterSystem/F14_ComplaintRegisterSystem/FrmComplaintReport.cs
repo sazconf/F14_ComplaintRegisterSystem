@@ -70,5 +70,12 @@ namespace F14_ComplaintRegisterSystem
             }
         }
 
+        private void btnGenerateReport_Click(object sender, EventArgs e)
+        {
+            FrmReportViewer frm =
+                new FrmReportViewer();
+
+            frm.ShowDialog();
+        }
     }
 }
