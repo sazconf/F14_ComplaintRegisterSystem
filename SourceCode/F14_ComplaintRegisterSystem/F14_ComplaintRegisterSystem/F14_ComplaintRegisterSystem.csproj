@@ -79,6 +79,12 @@
     <Compile Include="FrmAdminLogin.Designer.cs">
       <DependentUpon>FrmAdminLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmComplaintReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmComplaintReport.Designer.cs">
+      <DependentUpon>FrmComplaintReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmImportComplaints.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmComplaint.resx">
       <DependentUpon>FrmComplaint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmComplaintReport.resx">
+      <DependentUpon>FrmComplaintReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmConnection.resx">
       <DependentUpon>FrmConnection.cs</DependentUpon>

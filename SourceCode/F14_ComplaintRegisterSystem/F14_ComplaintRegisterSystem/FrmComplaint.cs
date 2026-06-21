@@ -499,5 +499,13 @@ namespace F14_ComplaintRegisterSystem
             FrmImportComplaints frm = new FrmImportComplaints();
             frm.ShowDialog();
         }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            FrmComplaintReport frm =
+                new FrmComplaintReport();
+
+            frm.ShowDialog();
+        }
     }
 }
