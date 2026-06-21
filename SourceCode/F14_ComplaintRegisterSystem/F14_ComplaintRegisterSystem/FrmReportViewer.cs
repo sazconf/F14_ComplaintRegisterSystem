@@ -28,6 +28,10 @@ namespace F14_ComplaintRegisterSystem
         {
             ComplaintReport rpt = new ComplaintReport();
 
+            rpt.SetParameterValue(
+                "pCategory",
+                SelectedCategory);
+
             crystalReportViewer1.ReportSource = rpt;
 
             crystalReportViewer1.Refresh();
