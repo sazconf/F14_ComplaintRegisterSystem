@@ -9,6 +9,6 @@ namespace F14_ComplaintRegisterSystem
     public static class DBHelper
     {
         public static string ConnStr =
-            @"Data Source=SAZZAD_LAPTOP\SQLSERVERDEV;Initial Catalog=ComplaintDB;Integrated Security=True";
+            @"Data Source=(localdb)\MSSQLLocalDB2022;Initial Catalog=ComplaintDB;Integrated Security=True";
     }
 }

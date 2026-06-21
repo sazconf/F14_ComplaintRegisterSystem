@@ -57,7 +57,6 @@
             this.lblTotal = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -72,6 +71,8 @@
             this.btnUnsafeSearch = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.btnDashboard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComplaints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -471,12 +472,23 @@
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
+            // btnDashboard
+            // 
+            this.btnDashboard.Location = new System.Drawing.Point(777, 55);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(75, 23);
+            this.btnDashboard.TabIndex = 30;
+            this.btnDashboard.Text = "Dashboard";
+            this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
+            // 
             // FrmComplaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(1148, 653);
+            this.Controls.Add(this.btnDashboard);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.btnUnsafeSearch);
@@ -564,5 +576,6 @@
         private System.Windows.Forms.Button btnUnsafeSearch;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.Button btnDashboard;
     }
 }

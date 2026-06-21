@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 
 namespace F14_ComplaintRegisterSystem
 {
@@ -28,12 +29,27 @@ namespace F14_ComplaintRegisterSystem
         {
             ComplaintReport rpt = new ComplaintReport();
 
+            foreach (Table table in rpt.Database.Tables)
+            {
+                TableLogOnInfo logonInfo = table.LogOnInfo;
+
+                logonInfo.ConnectionInfo.ServerName =
+                    @"(localdb)\MSSQLLocalDB2022";
+
+                logonInfo.ConnectionInfo.DatabaseName =
+                    "ComplaintDB";
+
+                logonInfo.ConnectionInfo.IntegratedSecurity =
+                    true;
+
+                table.ApplyLogOnInfo(logonInfo);
+            }
+
             rpt.SetParameterValue(
                 "pCategory",
                 SelectedCategory);
 
             crystalReportViewer1.ReportSource = rpt;
-
             crystalReportViewer1.Refresh();
         }
     }
