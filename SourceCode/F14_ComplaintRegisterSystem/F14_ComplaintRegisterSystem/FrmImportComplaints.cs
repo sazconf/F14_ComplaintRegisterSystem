@@ -43,9 +43,35 @@ namespace F14_ComplaintRegisterSystem
                 return;
             }
 
-            // 1. Validate required headers
+            // 1. Validate required headers and duplicates
             string[] requiredHeaders = { "email", "full_name", "category_name", "status_name", "title", "description", "report_date", "rejection_reason" };
             List<string> missingHeaders = new List<string>();
+
+            // Check for duplicate columns. ExcelDataReader appends "_1", "_2", etc.
+            bool hasDuplicates = false;
+            foreach (DataColumn col in excelData.Columns)
+            {
+                int underscoreIndex = col.ColumnName.LastIndexOf('_');
+                if (underscoreIndex > 0 && underscoreIndex < col.ColumnName.Length - 1)
+                {
+                    string suffix = col.ColumnName.Substring(underscoreIndex + 1);
+                    if (int.TryParse(suffix, out _))
+                    {
+                        string baseName = col.ColumnName.Substring(0, underscoreIndex);
+                        if (excelData.Columns.Contains(baseName))
+                        {
+                            hasDuplicates = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (hasDuplicates)
+            {
+                MessageBox.Show("Import failed. Duplicate column names exist.", "Import Error");
+                return;
+            }
 
             foreach (var header in requiredHeaders)
             {
@@ -98,37 +124,95 @@ namespace F14_ComplaintRegisterSystem
             // 2. Validate all rows
             List<string> errors = new List<string>();
 
-            for (int i = 0; i < excelData.Rows.Count; i++)
+            using (SqlConnection conn = new SqlConnection(DBHelper.ConnStr))
             {
-                DataRow row = excelData.Rows[i];
-                int rowNum = i + 1; // 1-based for error reporting
+                conn.Open();
 
-                string email = row["email"]?.ToString().Trim();
-                string fullName = row["full_name"]?.ToString().Trim();
-                string categoryName = row["category_name"]?.ToString().Trim();
-                string statusName = row["status_name"]?.ToString().Trim();
-                string title = row["title"]?.ToString().Trim();
-                string description = row["description"]?.ToString().Trim();
-                string reportDateStr = row["report_date"]?.ToString().Trim();
-
-                if (string.IsNullOrEmpty(email)) errors.Add($"Row {rowNum}: email is required.");
-                if (string.IsNullOrEmpty(fullName)) errors.Add($"Row {rowNum}: full_name is required.");
-                if (string.IsNullOrEmpty(title)) errors.Add($"Row {rowNum}: title is required.");
-                if (string.IsNullOrEmpty(description)) errors.Add($"Row {rowNum}: description is required.");
-
-                if (string.IsNullOrEmpty(categoryName) || !categoryMap.ContainsKey(categoryName))
+                for (int i = 0; i < excelData.Rows.Count; i++)
                 {
-                    errors.Add($"Row {rowNum}: category_name '{categoryName}' does not exist.");
-                }
-                if (string.IsNullOrEmpty(statusName) || !statusMap.ContainsKey(statusName))
-                {
-                    errors.Add($"Row {rowNum}: status_name '{statusName}' does not exist.");
-                }
+                    DataRow row = excelData.Rows[i];
+                    int excelRowNum = i + 2; // Data row starts at 2 assuming row 1 is header
 
-                DateTime parsedDate;
-                if (!DateTime.TryParse(reportDateStr, out parsedDate))
-                {
-                    errors.Add($"Row {rowNum}: report_date '{reportDateStr}' is not a valid date.");
+                    string email = row["email"]?.ToString().Trim();
+                    string fullName = row["full_name"]?.ToString().Trim();
+                    string categoryName = row["category_name"]?.ToString().Trim();
+                    string statusName = row["status_name"]?.ToString().Trim();
+                    string title = row["title"]?.ToString().Trim();
+                    string description = row["description"]?.ToString().Trim();
+                    string reportDateStr = row["report_date"]?.ToString().Trim();
+
+                    if (string.IsNullOrEmpty(email)) errors.Add($"Row {excelRowNum}: Email is required.");
+                    if (string.IsNullOrEmpty(fullName)) errors.Add($"Row {excelRowNum}: Full name is required.");
+                    if (string.IsNullOrEmpty(title)) errors.Add($"Row {excelRowNum}: Title is required.");
+                    if (string.IsNullOrEmpty(description)) errors.Add($"Row {excelRowNum}: Description is required.");
+
+                    if (string.IsNullOrEmpty(categoryName))
+                    {
+                        errors.Add($"Row {excelRowNum}: Category is required.");
+                    }
+                    else if (!categoryMap.ContainsKey(categoryName))
+                    {
+                        errors.Add($"Row {excelRowNum}: Category '{categoryName}' does not exist.");
+                    }
+
+                    if (string.IsNullOrEmpty(statusName))
+                    {
+                        errors.Add($"Row {excelRowNum}: Status is required.");
+                    }
+                    else if (!statusMap.ContainsKey(statusName))
+                    {
+                        errors.Add($"Row {excelRowNum}: Status '{statusName}' does not exist.");
+                    }
+
+                    DateTime parsedDate = DateTime.MinValue;
+                    bool isValidDate = false;
+                    if (string.IsNullOrEmpty(reportDateStr))
+                    {
+                        errors.Add($"Row {excelRowNum}: Report date is required.");
+                    }
+                    else
+                    {
+                        if (!DateTime.TryParse(reportDateStr, out parsedDate))
+                        {
+                            errors.Add($"Row {excelRowNum}: Invalid report date.");
+                        }
+                        else
+                        {
+                            isValidDate = true;
+                        }
+                    }
+
+                    // Duplicate complaint validation logic
+                    if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(description) && isValidDate)
+                    {
+                        int userId = 0;
+                        using (SqlCommand cmdUser = new SqlCommand("SELECT user_id FROM dbo.users WHERE email = @email", conn))
+                        {
+                            cmdUser.Parameters.AddWithValue("@email", email);
+                            object result = cmdUser.ExecuteScalar();
+                            if (result != null)
+                            {
+                                userId = (int)result;
+                            }
+                        }
+
+                        if (userId > 0)
+                        {
+                            using (SqlCommand cmdDup = new SqlCommand("SELECT COUNT(*) FROM dbo.complaints WHERE user_id = @user_id AND title = @title AND description = @description AND report_date = @report_date", conn))
+                            {
+                                cmdDup.Parameters.AddWithValue("@user_id", userId);
+                                cmdDup.Parameters.AddWithValue("@title", title);
+                                cmdDup.Parameters.AddWithValue("@description", description);
+                                cmdDup.Parameters.AddWithValue("@report_date", parsedDate);
+
+                                int count = (int)cmdDup.ExecuteScalar();
+                                if (count > 0)
+                                {
+                                    errors.Add($"Row {excelRowNum}: Duplicate complaint already exists for user '{email}'.");
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
