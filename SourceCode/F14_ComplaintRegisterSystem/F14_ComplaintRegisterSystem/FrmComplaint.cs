@@ -579,5 +579,12 @@ namespace F14_ComplaintRegisterSystem
                 Application.Exit();
             }
         }
+
+        private void btnLogsView_Click(object sender, EventArgs e)
+        {
+            FrmComplaintLogs frm = new FrmComplaintLogs();
+
+            frm.ShowDialog();
+        }
     }
 }

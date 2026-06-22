@@ -73,6 +73,7 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
+            this.btnLogsView = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComplaints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -349,7 +350,7 @@
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1148, 31);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1148, 27);
             this.bindingNavigator1.TabIndex = 26;
             this.bindingNavigator1.Text = "bindingNavigator1";
             this.bindingNavigator1.RefreshItems += new System.EventHandler(this.bindingNavigator1_RefreshItems);
@@ -367,7 +368,7 @@
             this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
             this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
             this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(29, 28);
+            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(29, 24);
             this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
             // bindingNavigatorMoveFirstItem
@@ -484,12 +485,23 @@
             this.btnDashboard.UseVisualStyleBackColor = false;
             this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
+            // btnLogsView
+            // 
+            this.btnLogsView.Location = new System.Drawing.Point(655, 56);
+            this.btnLogsView.Name = "btnLogsView";
+            this.btnLogsView.Size = new System.Drawing.Size(91, 35);
+            this.btnLogsView.TabIndex = 31;
+            this.btnLogsView.Text = "Logs";
+            this.btnLogsView.UseVisualStyleBackColor = true;
+            this.btnLogsView.Click += new System.EventHandler(this.btnLogsView_Click);
+            // 
             // FrmComplaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(1148, 653);
+            this.Controls.Add(this.btnLogsView);
             this.Controls.Add(this.btnDashboard);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnImport);
@@ -579,5 +591,6 @@
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnReport;
         private System.Windows.Forms.Button btnDashboard;
+        private System.Windows.Forms.Button btnLogsView;
     }
 }
