@@ -77,5 +77,23 @@ namespace F14_ComplaintRegisterSystem
         {
 
         }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            bool anyVisible = false;
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f != this && f.Visible)
+                {
+                    anyVisible = true;
+                    break;
+                }
+            }
+            if (!anyVisible)
+            {
+                Application.Exit();
+            }
+        }
     }
 }

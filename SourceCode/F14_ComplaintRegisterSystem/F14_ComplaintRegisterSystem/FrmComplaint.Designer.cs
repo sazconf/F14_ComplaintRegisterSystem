@@ -476,9 +476,9 @@
             // btnDashboard
             // 
             this.btnDashboard.BackColor = System.Drawing.Color.SpringGreen;
-            this.btnDashboard.Location = new System.Drawing.Point(765, 55);
+            this.btnDashboard.Location = new System.Drawing.Point(752, 55);
             this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(87, 36);
+            this.btnDashboard.Size = new System.Drawing.Size(100, 36);
             this.btnDashboard.TabIndex = 30;
             this.btnDashboard.Text = "Dashboard";
             this.btnDashboard.UseVisualStyleBackColor = false;

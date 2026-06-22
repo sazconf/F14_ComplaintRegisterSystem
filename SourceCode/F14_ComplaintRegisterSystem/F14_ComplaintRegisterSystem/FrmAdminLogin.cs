@@ -51,7 +51,7 @@ namespace F14_ComplaintRegisterSystem
 
                 FrmComplaint frm = new FrmComplaint(); // Admin panel
                 frm.Show();
-                this.Hide();
+                this.Close();
             }
             else
             {
@@ -66,6 +66,24 @@ namespace F14_ComplaintRegisterSystem
             FrmConnection frm = new FrmConnection();
             frm.Show();
             this.Close();
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            bool anyVisible = false;
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f != this && f.Visible)
+                {
+                    anyVisible = true;
+                    break;
+                }
+            }
+            if (!anyVisible)
+            {
+                Application.Exit();
+            }
         }
     }
 }

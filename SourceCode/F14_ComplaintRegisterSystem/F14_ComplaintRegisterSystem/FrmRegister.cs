@@ -108,7 +108,7 @@ namespace F14_ComplaintRegisterSystem
         {
             FrmLogin frm = new FrmLogin();
             frm.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -116,6 +116,24 @@ namespace F14_ComplaintRegisterSystem
             FrmConnection frm = new FrmConnection();
             frm.Show();
             this.Close();
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            bool anyVisible = false;
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f != this && f.Visible)
+                {
+                    anyVisible = true;
+                    break;
+                }
+            }
+            if (!anyVisible)
+            {
+                Application.Exit();
+            }
         }
     }
 }
