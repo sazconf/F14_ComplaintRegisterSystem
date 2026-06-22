@@ -99,10 +99,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplaintDataSet.cs">
+      <DependentUpon>ComplaintDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ComplaintDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComplaintDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ComplaintReport2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ComplaintReport2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComplaintReport3.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComplaintReport3.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComplaintReport4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComplaintReport4.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DBHelper.cs" />
@@ -173,6 +193,14 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ComplaintReport2.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComplaintReport3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ComplaintReport3.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComplaintReport4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ComplaintReport4.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmAdminLogin.resx">
       <DependentUpon>FrmAdminLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -212,6 +240,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ComplaintDataSet.xsc">
+      <DependentUpon>ComplaintDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ComplaintDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ComplaintDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ComplaintDataSet.xss">
+      <DependentUpon>ComplaintDataSet.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

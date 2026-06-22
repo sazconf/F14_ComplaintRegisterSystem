@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
 
 namespace F14_ComplaintRegisterSystem
 {
     public partial class FrmReportViewer : Form
     {
         public string SelectedCategory { get; set; }
+
         public FrmReportViewer()
         {
             InitializeComponent();
@@ -29,64 +23,76 @@ namespace F14_ComplaintRegisterSystem
         {
             try
             {
-                ComplaintReport2 rpt = new ComplaintReport2();
-                rpt.DataSourceConnections.Clear();
+                DataTable dt = new DataTable();
 
-                ConnectionInfo connectionInfo = new ConnectionInfo
+                string query;
+
+                if (SelectedCategory == "All Categories")
                 {
-                    ServerName = @"(localdb)\MSSQLLocalDB2022",
-                    DatabaseName = "ComplaintDB",
-                    IntegratedSecurity = true
-                };
-
-                foreach (Table table in rpt.Database.Tables)
+                    query = @"
+                        SELECT
+                            complaint_id,
+                            user_id,
+                            Citizen,
+                            Category,
+                            Status,
+                            title,
+                            description,
+                            report_date,
+                            rejection_reason
+                        FROM vw_Complaints";
+                }
+                else
                 {
-                    TableLogOnInfo logonInfo = table.LogOnInfo;
-                    logonInfo.ConnectionInfo = connectionInfo;
-
-                    table.ApplyLogOnInfo(logonInfo);
+                    query = @"
+                        SELECT
+                            complaint_id,
+                            user_id,
+                            Citizen,
+                            Category,
+                            Status,
+                            title,
+                            description,
+                            report_date,
+                            rejection_reason
+                        FROM vw_Complaints
+                        WHERE Category = @Category";
                 }
 
-                // Apply connection info to subreports if any exist
-                foreach (Section section in rpt.ReportDefinition.Sections)
+                using (SqlConnection conn =
+                    new SqlConnection(DBHelper.ConnStr))
                 {
-                    foreach (ReportObject reportObject in section.ReportObjects)
+                    using (SqlCommand cmd =
+                        new SqlCommand(query, conn))
                     {
-                        if (reportObject.Kind == ReportObjectKind.SubreportObject)
+                        if (SelectedCategory != "All Categories")
                         {
-                            SubreportObject subReportObject =
-                                (SubreportObject)reportObject;
-
-                            ReportDocument subReport =
-                                subReportObject.OpenSubreport(
-                                    subReportObject.SubreportName);
-
-                            foreach (Table table in subReport.Database.Tables)
-                            {
-                                TableLogOnInfo logonInfo =
-                                    table.LogOnInfo;
-
-                                logonInfo.ConnectionInfo =
-                                    connectionInfo;
-
-                                table.ApplyLogOnInfo(logonInfo);
-                            }
+                            cmd.Parameters.AddWithValue(
+                                "@Category",
+                                SelectedCategory);
                         }
+
+                        SqlDataAdapter da =
+                            new SqlDataAdapter(cmd);
+
+                        da.Fill(dt);
                     }
                 }
 
-                rpt.SetParameterValue(
-                    "pCategory",
-                    SelectedCategory);
+                ComplaintReport4 rpt =
+                    new ComplaintReport4();
+
+                rpt.SetDataSource(dt);
 
                 crystalReportViewer1.ReportSource = rpt;
+
                 crystalReportViewer1.Refresh();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    ex.ToString(),
-                    "Crystal Report Error",
+                    ex.Message,
+                    "Report Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
