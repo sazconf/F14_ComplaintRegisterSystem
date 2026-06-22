@@ -16,14 +16,14 @@ namespace F14_ComplaintRegisterSystem {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class ComplaintReport : ReportClass {
+    public class ComplaintReport2 : ReportClass {
         
-        public ComplaintReport() {
+        public ComplaintReport2() {
         }
         
         public override string ResourceName {
             get {
-                return "ComplaintReport.rpt";
+                return "ComplaintReport2.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace F14_ComplaintRegisterSystem {
         
         public override string FullResourceName {
             get {
-                return "F14_ComplaintRegisterSystem.ComplaintReport.rpt";
+                return "F14_ComplaintRegisterSystem.ComplaintReport2.rpt";
             }
             set {
                 // Do nothing
@@ -98,9 +98,9 @@ namespace F14_ComplaintRegisterSystem {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedComplaintReport : Component, ICachedReport {
+    public class CachedComplaintReport2 : Component, ICachedReport {
         
-        public CachedComplaintReport() {
+        public CachedComplaintReport2() {
         }
         
         [Browsable(false)]
@@ -137,7 +137,7 @@ namespace F14_ComplaintRegisterSystem {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            ComplaintReport rpt = new ComplaintReport();
+            ComplaintReport2 rpt = new ComplaintReport2();
             rpt.Site = this.Site;
             return rpt;
         }

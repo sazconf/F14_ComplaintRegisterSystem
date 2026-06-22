@@ -36,9 +36,10 @@
             // lblCatagory
             // 
             this.lblCatagory.AutoSize = true;
-            this.lblCatagory.Location = new System.Drawing.Point(191, 156);
+            this.lblCatagory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCatagory.Location = new System.Drawing.Point(158, 156);
             this.lblCatagory.Name = "lblCatagory";
-            this.lblCatagory.Size = new System.Drawing.Size(118, 16);
+            this.lblCatagory.Size = new System.Drawing.Size(148, 20);
             this.lblCatagory.TabIndex = 0;
             this.lblCatagory.Text = "Choose Catagory: ";
             // 
@@ -53,18 +54,20 @@
             // 
             // btnGenerateReport
             // 
+            this.btnGenerateReport.BackColor = System.Drawing.Color.PaleGreen;
             this.btnGenerateReport.Location = new System.Drawing.Point(397, 200);
             this.btnGenerateReport.Name = "btnGenerateReport";
-            this.btnGenerateReport.Size = new System.Drawing.Size(166, 23);
+            this.btnGenerateReport.Size = new System.Drawing.Size(166, 37);
             this.btnGenerateReport.TabIndex = 2;
             this.btnGenerateReport.Text = "Generate Report";
-            this.btnGenerateReport.UseVisualStyleBackColor = true;
+            this.btnGenerateReport.UseVisualStyleBackColor = false;
             this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
             // 
             // FrmComplaintReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(953, 531);
             this.Controls.Add(this.btnGenerateReport);
             this.Controls.Add(this.cmbCategory);

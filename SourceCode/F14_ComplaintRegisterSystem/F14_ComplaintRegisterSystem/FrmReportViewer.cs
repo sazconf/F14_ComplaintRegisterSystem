@@ -27,30 +27,69 @@ namespace F14_ComplaintRegisterSystem
 
         private void FrmReportViewer_Load(object sender, EventArgs e)
         {
-            ComplaintReport rpt = new ComplaintReport();
-
-            foreach (Table table in rpt.Database.Tables)
+            try
             {
-                TableLogOnInfo logonInfo = table.LogOnInfo;
+                ComplaintReport2 rpt = new ComplaintReport2();
+                rpt.DataSourceConnections.Clear();
 
-                logonInfo.ConnectionInfo.ServerName =
-                    @"(localdb)\MSSQLLocalDB2022";
+                ConnectionInfo connectionInfo = new ConnectionInfo
+                {
+                    ServerName = @"(localdb)\MSSQLLocalDB2022",
+                    DatabaseName = "ComplaintDB",
+                    IntegratedSecurity = true
+                };
 
-                logonInfo.ConnectionInfo.DatabaseName =
-                    "ComplaintDB";
+                foreach (Table table in rpt.Database.Tables)
+                {
+                    TableLogOnInfo logonInfo = table.LogOnInfo;
+                    logonInfo.ConnectionInfo = connectionInfo;
 
-                logonInfo.ConnectionInfo.IntegratedSecurity =
-                    true;
+                    table.ApplyLogOnInfo(logonInfo);
+                }
 
-                table.ApplyLogOnInfo(logonInfo);
+                // Apply connection info to subreports if any exist
+                foreach (Section section in rpt.ReportDefinition.Sections)
+                {
+                    foreach (ReportObject reportObject in section.ReportObjects)
+                    {
+                        if (reportObject.Kind == ReportObjectKind.SubreportObject)
+                        {
+                            SubreportObject subReportObject =
+                                (SubreportObject)reportObject;
+
+                            ReportDocument subReport =
+                                subReportObject.OpenSubreport(
+                                    subReportObject.SubreportName);
+
+                            foreach (Table table in subReport.Database.Tables)
+                            {
+                                TableLogOnInfo logonInfo =
+                                    table.LogOnInfo;
+
+                                logonInfo.ConnectionInfo =
+                                    connectionInfo;
+
+                                table.ApplyLogOnInfo(logonInfo);
+                            }
+                        }
+                    }
+                }
+
+                rpt.SetParameterValue(
+                    "pCategory",
+                    SelectedCategory);
+
+                crystalReportViewer1.ReportSource = rpt;
+                crystalReportViewer1.Refresh();
             }
-
-            rpt.SetParameterValue(
-                "pCategory",
-                SelectedCategory);
-
-            crystalReportViewer1.ReportSource = rpt;
-            crystalReportViewer1.Refresh();
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.ToString(),
+                    "Crystal Report Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

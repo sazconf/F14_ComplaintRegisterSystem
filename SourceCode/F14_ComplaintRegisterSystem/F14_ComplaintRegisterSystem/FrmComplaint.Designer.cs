@@ -57,6 +57,7 @@
             this.lblTotal = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -71,7 +72,6 @@
             this.btnUnsafeSearch = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.btnDashboard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComplaints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -453,10 +453,10 @@
             // 
             // btnImport
             // 
-            this.btnImport.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.btnImport.Location = new System.Drawing.Point(967, 53);
+            this.btnImport.BackColor = System.Drawing.Color.SpringGreen;
+            this.btnImport.Location = new System.Drawing.Point(967, 55);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(74, 27);
+            this.btnImport.Size = new System.Drawing.Size(74, 36);
             this.btnImport.TabIndex = 28;
             this.btnImport.Text = "Import";
             this.btnImport.UseVisualStyleBackColor = false;
@@ -464,22 +464,24 @@
             // 
             // btnReport
             // 
+            this.btnReport.BackColor = System.Drawing.Color.SpringGreen;
             this.btnReport.Location = new System.Drawing.Point(876, 55);
             this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(75, 23);
+            this.btnReport.Size = new System.Drawing.Size(75, 36);
             this.btnReport.TabIndex = 29;
             this.btnReport.Text = "Report";
-            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.UseVisualStyleBackColor = false;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // btnDashboard
             // 
-            this.btnDashboard.Location = new System.Drawing.Point(777, 55);
+            this.btnDashboard.BackColor = System.Drawing.Color.SpringGreen;
+            this.btnDashboard.Location = new System.Drawing.Point(765, 55);
             this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.Size = new System.Drawing.Size(75, 23);
+            this.btnDashboard.Size = new System.Drawing.Size(87, 36);
             this.btnDashboard.TabIndex = 30;
             this.btnDashboard.Text = "Dashboard";
-            this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.UseVisualStyleBackColor = false;
             this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // FrmComplaint
