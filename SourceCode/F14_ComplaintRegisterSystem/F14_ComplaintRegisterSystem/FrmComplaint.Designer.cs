@@ -487,12 +487,13 @@
             // 
             // btnLogsView
             // 
+            this.btnLogsView.BackColor = System.Drawing.Color.SpringGreen;
             this.btnLogsView.Location = new System.Drawing.Point(655, 56);
             this.btnLogsView.Name = "btnLogsView";
             this.btnLogsView.Size = new System.Drawing.Size(91, 35);
             this.btnLogsView.TabIndex = 31;
             this.btnLogsView.Text = "Logs";
-            this.btnLogsView.UseVisualStyleBackColor = true;
+            this.btnLogsView.UseVisualStyleBackColor = false;
             this.btnLogsView.Click += new System.EventHandler(this.btnLogsView_Click);
             // 
             // FrmComplaint
