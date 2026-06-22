@@ -437,6 +437,10 @@ The application supports importing complaint data from Microsoft Excel files.
 
 ---
 
+## Admin Credentials
+* Default username: admin@system.com
+* Default password: admin123
+
 ## Database Deployment Automation
 
 To simplify deployment on different computers, the system includes automated database setup features.
