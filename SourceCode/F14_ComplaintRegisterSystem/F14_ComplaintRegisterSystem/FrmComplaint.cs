@@ -19,6 +19,9 @@ namespace F14_ComplaintRegisterSystem
         {
             InitializeComponent();
 
+            bindingSource1.CurrentChanged +=
+            bindingSource1_CurrentChanged;
+
             LoadUsers();
             LoadCategories();
             LoadStatus();
@@ -34,6 +37,49 @@ namespace F14_ComplaintRegisterSystem
             dtpDate.MaxDate = new DateTime(2050, 12, 31);
 
         }
+        //Binding Navigator Current Changed Event
+
+        private void bindingSource1_CurrentChanged(
+    object sender,
+    EventArgs e)
+        {
+            if (bindingSource1.Current == null)
+                return;
+
+            DataRowView row =
+                (DataRowView)bindingSource1.Current;
+
+            txtComplaintID.Text =
+                row["complaint_id"].ToString();
+
+            txtTitle.Text =
+                row["title"].ToString();
+
+            txtDescription.Text =
+                row["description"].ToString();
+
+            txtRejectReason.Text =
+                row["rejection_reason"].ToString();
+
+            cmbUser.Text =
+                row["Citizen"].ToString();
+
+            cmbCategory.Text =
+                row["Category"].ToString();
+
+            cmbStatus.Text =
+                row["Status"].ToString();
+
+            DateTime reportDate;
+
+            if (DateTime.TryParse(
+                row["report_date"].ToString(),
+                out reportDate))
+            {
+                dtpDate.Value = reportDate;
+            }
+        }
+
 
         // LOAD USERS
         private void LoadUsers()
