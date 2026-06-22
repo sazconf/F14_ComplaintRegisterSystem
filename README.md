@@ -369,8 +369,112 @@ Most database operations use:
 
 to prevent malicious SQL execution.
 
+
 ---
 
+## Dashboard Analytics
+
+The application includes an administrative dashboard that provides a visual overview of complaint statistics.
+
+### Dashboard Features
+
+* Total Complaints
+* Verified Complaints
+* Resolved Complaints
+* Rejected Complaints
+* Complaint Distribution by Category
+
+### Purpose
+
+* Improve data visibility
+* Provide quick statistical summaries
+* Support administrative decision-making
+
+---
+
+## Report Generation
+
+The system supports professional report generation using Crystal Reports.
+
+### Report Features
+
+* Category-based Complaint Reports
+* Complete Complaint Listings
+* Dynamic Report Filtering
+* Printable Report Format
+* Summary Totals
+
+### Technologies Used
+
+* Crystal Reports
+* ADO.NET DataTable Integration
+* SQL Server LocalDB
+
+### Purpose
+
+* Generate professional reports
+* Simplify complaint analysis
+* Support documentation and auditing activities
+
+---
+
+## Excel Data Import
+
+The application supports importing complaint data from Microsoft Excel files.
+
+### Import Features
+
+* Import from `.xlsx` files
+* Bulk Data Insertion
+* Automatic Data Validation
+* Error Handling During Import
+
+### Benefits
+
+* Reduce manual data entry
+* Improve efficiency for large datasets
+* Support external data integration
+
+---
+
+## Database Deployment Automation
+
+To simplify deployment on different computers, the system includes automated database setup features.
+
+### Deployment Features
+
+* SQL Server LocalDB Integration
+* Automatic LocalDB Instance Creation
+* Automatic Database Restoration
+* One-Click Installation Process
+
+### Benefits
+
+* Simplified deployment
+* Reduced manual configuration
+* Improved portability across systems
+
+---
+
+## Crystal Reports Integration
+
+Crystal Reports was integrated to provide enterprise-style reporting capabilities.
+
+### Implemented Features
+
+* Dynamic Report Generation
+* Category Filtering
+* Summary Footer Calculations
+* Print-Ready Layout Design
+
+### Benefits
+
+* Better data presentation
+* Improved reporting workflow
+* Enhanced administrative usability
+
+
+---
 # Security Features
 
 - Parameterized queries
